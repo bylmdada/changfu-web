@@ -1,0 +1,664 @@
+/**
+ * 宜蘭縣長期照護及社會福祉推廣協會 官方網站
+ * 主要 JavaScript 檔案
+ */
+
+// ============================================
+// 全域變數與設定
+// ============================================
+let siteData = null;
+const DATA_URL = "data/site-data.json";
+
+// ============================================
+// 初始化
+// ============================================
+document.addEventListener("DOMContentLoaded", async () => {
+  // 初始化新功能
+  initA11yWidget();
+  initBackToTop();
+  
+  // 載入資料並渲染
+  await loadSiteData();
+  
+  // 自動渲染頁面內容 (如果存在對應容器)
+  // 自動渲染頁面內容 (如果存在對應容器)
+  renderServices();
+  renderNews();
+  renderLocations();
+  renderServicesPage();
+  
+  // 初始化靜態頁面功能
+  initContactForm();
+  initScrollReveal();
+  
+  initHeroStats();
+});
+
+// ============================================
+// 資料載入
+// ============================================
+async function loadSiteData() {
+  try {
+    const response = await fetch(DATA_URL);
+    if (!response.ok) {
+      throw new Error("Failed to load site data");
+    }
+    siteData = await response.json();
+    console.log("Site data loaded successfully");
+  } catch (error) {
+    console.error("Error loading site data:", error);
+    // 使用內嵌的備用資料
+    siteData = getFallbackData();
+  }
+}
+
+// 備用資料（當 JSON 無法載入時使用）
+function getFallbackData() {
+  return {
+    organization: {
+      name: "社團法人宜蘭縣長期照護及社會福祉推廣協會",
+      shortName: "宜蘭長福會",
+      tagline: "專業照護、在地深耕、溫暖相伴",
+      stats: {
+        served: 5000,
+        years: 10,
+        locations: 8
+      }
+    },
+    serviceTypes: [
+      {
+        id: "elder-care",
+        name: "長者照顧服務",
+        shortDescription:
+          "提供日間照顧服務，讓長者在熟悉的社區環境中獲得生活照顧、健康促進及休閒社會參與活動。",
+        icon: "ph-house",
+        serviceItems: ["日間照顧", "健康促進", "社會參與"],
+      },
+      {
+        id: "dementia-center",
+        name: "失智社區服務據點",
+        shortDescription:
+          "提供在地化之失智照護與支持服務，協助長者維持生活功能。",
+        icon: "ph-brain",
+        serviceItems: ["認知促進", "共餐服務", "照顧者支持"],
+      },
+      {
+        id: "assistive-devices",
+        name: "輔具資源服務",
+        shortDescription: "提供單一窗口之輔具服務，協助民眾獲得適當輔具。",
+        icon: "ph-wheelchair",
+        serviceItems: ["輔具借用", "輔具評估", "居家無障礙評估"],
+      },
+    ],
+    serviceLocations: [
+      {
+        id: "babao",
+        name: "八寶社區長照機構",
+        locationType: "長照機構",
+        township: "冬山",
+        address: "宜蘭縣冬山鄉八寶路 25 號",
+        phone: "+886 3 958 1020",
+        serviceHours: "週一至週五 08:00-17:00",
+      },
+    ],
+    news: [
+      {
+        id: "news-001",
+        title: "歡迎蒞臨本會官方網站",
+        category: "公告",
+        summary: "社團法人宜蘭縣長期照護及社會福祉推廣協會官方網站正式上線。",
+        publishDate: "2026-02-10",
+      },
+    ],
+  };
+}
+
+// ============================================
+// Header 滾動效果
+// ============================================
+function initHeader() {
+  const header = document.getElementById("header");
+  if (!header) return;
+
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener("scroll", () => {
+    const currentScrollY = window.scrollY;
+
+    // 添加滾動樣式
+    if (currentScrollY > 50) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+
+    lastScrollY = currentScrollY;
+  });
+}
+
+// ============================================
+// 手機導覽選單
+// ============================================
+function initMobileNav() {
+  const menuToggle = document.getElementById("menuToggle");
+  const navMobile = document.getElementById("navMobile");
+
+  if (!menuToggle || !navMobile) return;
+
+  menuToggle.addEventListener("click", () => {
+    navMobile.classList.toggle("active");
+    menuToggle.classList.toggle("active");
+    // Toggle aria-expanded
+    const expanded = menuToggle.classList.contains("active");
+    menuToggle.setAttribute("aria-expanded", expanded);
+    document.body.classList.toggle("nav-open");
+  });
+
+  // 點擊連結後關閉選單
+  const navLinks = navMobile.querySelectorAll(".nav-link");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      navMobile.classList.remove("active");
+      menuToggle.classList.remove("active");
+      menuToggle.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("nav-open");
+    });
+  });
+}
+
+// ============================================
+// 滾動揭示動畫
+// ============================================
+function initScrollReveal() {
+  const revealElements = document.querySelectorAll(".reveal");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    },
+    {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    },
+  );
+
+  revealElements.forEach((el) => observer.observe(el));
+}
+
+// ============================================
+// 無障礙工具列 (A11y Widget)
+// ============================================
+function initA11yWidget() {
+    // 檢查是否已存在，避免重複建立
+    if (document.querySelector('.a11y-widget')) return;
+
+    const widget = document.createElement('div');
+    widget.className = 'a11y-widget';
+    widget.innerHTML = `
+        <button class="a11y-toggle-btn" id="a11yFonts" aria-label="放大字體" title="放大字體">
+            <span style="font-size: 1.2rem;">A+</span>
+        </button>
+        <button class="a11y-toggle-btn" id="a11yContrast" aria-label="高對比模式" title="高對比模式">
+            <span style="font-size: 1.2rem;">◐</span>
+        </button>
+    `;
+    document.body.appendChild(widget);
+
+    // 字體放大功能
+    const fontsBtn = document.getElementById('a11yFonts');
+    let isLargeFont = false;
+    fontsBtn.addEventListener('click', () => {
+        isLargeFont = !isLargeFont;
+        if (isLargeFont) {
+            document.documentElement.style.setProperty('--font-size-base', '1.25rem'); // 20px
+            fontsBtn.classList.add('active');
+            fontsBtn.innerHTML = '<span style="font-size: 1rem;">A-</span>';
+            fontsBtn.setAttribute('aria-label', '恢復字體大小');
+        } else {
+            document.documentElement.style.setProperty('--font-size-base', '1.125rem'); // 18px
+            fontsBtn.classList.remove('active');
+            fontsBtn.innerHTML = '<span style="font-size: 1.2rem;">A+</span>';
+            fontsBtn.setAttribute('aria-label', '放大字體');
+        }
+    });
+
+    // 高對比模式
+    const contrastBtn = document.getElementById('a11yContrast');
+    contrastBtn.addEventListener('click', () => {
+        document.body.classList.toggle('high-contrast');
+        contrastBtn.classList.toggle('active');
+        const isActive = document.body.classList.contains('high-contrast');
+        contrastBtn.setAttribute('aria-label', isActive ? '關閉高對比' : '開啟高對比');
+    });
+}
+
+// ============================================
+// 回到頂部按鈕 (Back to Top)
+// ============================================
+function initBackToTop() {
+    if (document.querySelector('.back-to-top')) return;
+
+    const btn = document.createElement('button');
+    btn.className = 'back-to-top';
+    btn.innerHTML = '↑';
+    btn.setAttribute('aria-label', '回到頂部');
+    document.body.appendChild(btn);
+
+    // 顯示控制
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    });
+
+    // 點擊滾動
+    btn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// ============================================
+// Hero 統計數字動畫
+// ============================================
+function initHeroStats() {
+    const statsContainer = document.getElementById('heroStats');
+    if (!statsContainer) return; // 如果頁面沒有 Stats 容器則跳過
+
+    // 模擬數據 (如果 siteData 中沒有)
+    const statsData = siteData?.organization?.stats || {
+        served: 5000,
+        years: 10,
+        locations: 8
+    };
+    
+    // 如果已有內容則不重複渲染 (支援靜態 HTML)
+    if (statsContainer.innerHTML.trim() === '') {
+        statsContainer.innerHTML = `
+            <div class="stat-item reveal">
+                <span class="stat-number" data-target="${statsData.served}">0</span>
+                <span class="stat-label">服務人次</span>
+            </div>
+            <div class="stat-item reveal">
+                <span class="stat-number" data-target="${statsData.years}">0</span>
+                <span class="stat-label">深耕年數</span>
+            </div>
+            <div class="stat-item reveal">
+                <span class="stat-number" data-target="${statsData.locations}">0</span>
+                <span class="stat-label">服務據點</span>
+            </div>
+        `;
+    }
+
+    // 數字跳動動畫
+    const numbers = statsContainer.querySelectorAll('.stat-number');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const endValue = parseInt(target.getAttribute('data-target'));
+                animateValue(target, 0, endValue, 2000);
+                observer.unobserve(target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    numbers.forEach(num => observer.observe(num));
+}
+
+function animateValue(obj, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString() + (end > 100 ? '+' : '');
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
+// ============================================
+// 渲染服務項目
+// ============================================
+// ============================================
+// 渲染服務項目
+// ============================================
+function renderServices() {
+  const grid = document.getElementById("servicesGrid");
+  if (!grid || !siteData) return;
+
+  const services = siteData.serviceTypes || [];
+
+  grid.innerHTML = services
+    .map(
+      (service) => `
+    <div class="service-card reveal">
+      <div class="service-icon"><i class="ph ${service.icon}"></i></div>
+      <h3 class="service-title">${service.name}</h3>
+      <p class="service-description">${service.shortDescription}</p>
+      <div class="service-features">
+        ${(service.serviceItems || [])
+          .slice(0, 4)
+          .map(
+            (item) => `
+          <span class="feature-tag">${item}</span>
+        `,
+          )
+          .join("")}
+      </div>
+      <a href="services.html#${service.id}" class="card-link" aria-label="瞭解更多關於${service.name}">
+        瞭解更多 →
+      </a>
+    </div>
+  `,
+    )
+    .join("");
+
+  // 重新初始化滾動揭示
+  initScrollReveal();
+}
+
+// ============================================
+// 渲染服務據點
+// ============================================
+function renderLocations(filter = "all") {
+  const grid = document.getElementById("locationsGrid");
+  if (!grid || !siteData) return;
+
+  let locations = siteData.serviceLocations || [];
+
+  // 篩選
+  if (filter !== "all") {
+    locations = locations.filter((loc) => loc.locationType === filter);
+  }
+
+  // 只顯示前 8 個
+  locations = locations.slice(0, 8);
+
+  grid.innerHTML = locations
+    .map((location) => {
+      // 根據類型設定樣式
+      let typeClass = "";
+      let icon = "ph-house";
+
+      if (location.locationType === "樂智據點") {
+        typeClass = "dementia";
+        icon = "ph-brain";
+      } else if (location.locationType === "輔具中心") {
+        typeClass = "assistive";
+        icon = "ph-wheelchair";
+      }
+
+      return `
+      <div class="location-card reveal ${typeClass}">
+        <div class="location-image">
+          <img src="${location.images && location.images.length > 0 ? location.images[0] : 'assets/images/placeholder.jpg'}" alt="${location.name}" loading="lazy">
+          <div class="location-tag">${location.locationType}</div>
+        </div>
+        <div class="location-content">
+          <div class="location-icon"><i class="ph ${icon}"></i></div>
+          <h3 class="location-title">${location.name}</h3>
+          <div class="location-info">
+            <p><span>📍</span> ${location.township} | ${location.address}</p>
+            <p><span>📞</span> ${location.phone}</p>
+          </div>
+          ${location.externalLink 
+            ? `<a href="${location.externalLink}" target="_blank" class="location-link">前往網站 →</a>`
+            : `<a href="contact.html" class="location-link">聯絡我們 →</a>`
+          }
+        </div>
+      </div>
+    `;
+    })
+    .join("");
+    
+  // 重新初始化滾動揭示
+  initScrollReveal();
+}
+
+
+
+
+// ============================================
+// 據點篩選功能
+// ============================================
+function initLocationFilters() {
+  const filterBtns = document.querySelectorAll(".filter-btn");
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      // 更新按鈕狀態
+      filterBtns.forEach((b) => {
+        b.classList.remove("active");
+        b.classList.remove("btn-primary");
+        b.classList.add("btn-outline");
+        b.setAttribute("aria-pressed", "false");
+      });
+      btn.classList.add("active");
+      btn.classList.remove("btn-outline");
+      btn.classList.add("btn-primary");
+      btn.setAttribute("aria-pressed", "true");
+
+      // 篩選據點
+      const filter = btn.dataset.filter;
+      renderLocations(filter);
+    });
+  });
+}
+
+// ============================================
+// 渲染最新消息
+// ============================================
+function renderNews() {
+  const grid = document.getElementById("newsGrid");
+  if (!grid || !siteData) return;
+
+  const news = (siteData.news || []).slice(0, 3);
+
+  if (news.length === 0) {
+    grid.innerHTML = `
+      <div class="news-card reveal" style="grid-column: 1 / -1; text-align: center;">
+        <p class="text-muted">目前沒有最新消息</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = news
+    .map(
+      (item) => {
+        let imageHtml = '';
+        if (item.coverImage) {
+          imageHtml = `<div class="news-image-wrapper" style="height: 200px; overflow: hidden; margin: -1.5rem -1.5rem 1.5rem -1.5rem; border-radius: var(--radius-lg) var(--radius-lg) 0 0;"><img src="${item.coverImage}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: cover;"></div>`;
+        }
+        return `
+    <div class="news-card reveal">
+      ${imageHtml}
+      <span class="news-date">${formatDate(item.publishDate)}</span>
+      <h3 class="news-title">${item.title}</h3>
+      <p class="news-summary">${item.summary}</p>
+      <a href="news.html#${item.id}" class="card-link" aria-label="閱讀更多關於${item.title}">
+        閱讀更多 →
+      </a>
+    </div>
+  `;
+      },
+    )
+
+    .join("");
+
+  // 重新初始化滾動揭示
+  initScrollReveal();
+}
+
+// ============================================
+// 工具函數
+// ============================================
+
+// 格式化日期
+function formatDate(dateString) {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}/${month}/${day}`;
+}
+
+// 截斷文字
+function truncate(text, maxLength = 100) {
+  if (!text || text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + "...";
+}
+
+// ============================================
+// 表單處理
+// ============================================
+function initContactForm() {
+  const form = document.getElementById("contactForm");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    // 顯示載入狀態
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "送出中...";
+    submitBtn.disabled = true;
+
+    try {
+      // 這裡可以串接實際的表單提交 API
+      console.log("Form submitted:", data);
+
+      // 模擬延遲
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // 成功訊息
+      alert("感謝您的來信！我們將盡快回覆您。");
+      form.reset();
+    } catch (error) {
+      console.error("Form submission error:", error);
+      alert("送出失敗，請稍後再試。");
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
+  });
+}
+
+// ============================================
+// 平滑滾動
+// ============================================
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", function (e) {
+    const href = this.getAttribute("href");
+    if (href === "#") return;
+
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      const headerHeight =
+        document.getElementById("header")?.offsetHeight || 80;
+      const targetPosition =
+        target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  });
+});
+
+// ============================================
+// 渲染服務頁面據點 (Services.html)
+// ============================================
+function renderServicesPage() {
+  if (!siteData) return;
+  
+  // Elder Care Locations
+  const elderCareGrid = document.getElementById('elderCareLocations');
+  if (elderCareGrid) {
+    const locations = siteData.serviceLocations.filter(loc => loc.locationType === '長照機構');
+    elderCareGrid.innerHTML = locations.map(loc => createLocationCard(loc)).join('');
+  }
+  
+  // Dementia Locations
+  const dementiaGrid = document.getElementById('dementiaLocations');
+  if (dementiaGrid) {
+    const locations = siteData.serviceLocations.filter(loc => loc.locationType === '樂智據點');
+    dementiaGrid.innerHTML = locations.map(loc => createLocationCard(loc, 'dementia')).join('');
+  }
+  
+  if (elderCareGrid || dementiaGrid) {
+    initScrollReveal();
+  }
+}
+
+function createLocationCard(location, type = '') {
+  let typeClass = type === 'dementia' ? 'dementia' : '';
+  let imageHtml = '';
+  
+  let iconClass = location.icon || (type === 'dementia' ? 'ph-brain' : 'ph-house');
+  
+  if (location.images && location.images.length > 0) {
+    imageHtml = `<div class="location-image-wrapper" style="height: 200px; overflow: hidden;"><img src="${location.images[0]}" alt="${location.name}" style="width: 100%; height: 100%; object-fit: cover;"></div>`;
+  } else {
+    imageHtml = `<div style="width: 100%; height: 200px; background: var(--color-gray-100); display: flex; align-items: center; justify-content: center; font-size: 3rem;"><i class="ph ${iconClass}"></i></div>`;
+  }
+  
+  return `
+    <div class="location-card reveal" style="overflow: hidden; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+      ${imageHtml}
+      <div class="location-body" style="padding: 1.5rem;">
+        <span class="location-type ${typeClass}" style="display: inline-block; padding: 0.25rem 0.75rem; background: var(--color-primary-bg); color: var(--color-primary); border-radius: var(--radius-full); font-size: 0.875rem; margin-bottom: 0.5rem;">${location.locationType}</span>
+        <h3 class="location-title" style="margin-bottom: 1rem;">${location.name}</h3>
+        <div class="location-info" style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-map-pin"></i></span>
+            <span>${location.township}</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-phone"></i></span>
+            <span>${location.phone}</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-clock"></i></span>
+            <span>${location.serviceHours}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ============================================
+// 匯出函數（供其他頁面使用）
+// ============================================
+window.SiteApp = {
+  loadSiteData,
+  renderServices,
+  renderLocations,
+  renderNews,
+  formatDate,
+  truncate,
+  initContactForm,
+  initA11yWidget,
+  initBackToTop,
+  initHeroStats
+};

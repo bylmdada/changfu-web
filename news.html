@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="宜蘭縣長期照護及社會福祉推廣協會最新消息 - 活動訊息、公告通知">
+  <title>最新消息 - 社團法人宜蘭縣長期照護及社會福祉推廣協會</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <style>
+    .news-list {
+      display: grid;
+      gap: var(--spacing-lg);
+    }
+    .news-item {
+      background: var(--color-white);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+    }
+    .news-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    @media (max-width: 768px) {
+      .news-item {
+        grid-template-columns: 1fr;
+      }
+    }
+    .news-item-image {
+      aspect-ratio: 4/3;
+      background: var(--color-gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    .news-item-body {
+      padding: var(--spacing-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    .news-item-meta {
+      display: flex;
+      gap: var(--spacing-md);
+      font-size: var(--font-size-sm);
+      color: var(--color-gray-500);
+    }
+    .news-item-title {
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      color: var(--color-gray-800);
+      margin: 0;
+    }
+    .news-item-excerpt {
+      color: var(--color-gray-600);
+      font-size: var(--font-size-sm);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .news-item-link {
+      color: var(--color-primary);
+      font-weight: 500;
+      font-size: var(--font-size-sm);
+      text-decoration: none;
+      align-self: flex-start;
+      margin-top: auto;
+    }
+    .news-item-link:hover {
+      text-decoration: underline;
+    }
+    .news-pagination {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-2xl);
+    }
+    .news-pagination button {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 1px solid var(--color-gray-300);
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+    .news-pagination button:hover,
+    .news-pagination button.active {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-color: var(--color-primary);
+    }
+    .news-filter-tabs {
+      display: flex;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-xl);
+      flex-wrap: wrap;
+    }
+    .news-filter-tab {
+      padding: var(--spacing-sm) var(--spacing-lg);
+      border: none;
+      background: var(--color-gray-100);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      transition: all var(--transition-normal);
+    }
+    .news-filter-tab:hover,
+    .news-filter-tab.active {
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <img src="assets/images/logo.png" alt="宜蘭長福會 Logo" class="logo-img" style="height: 50px; width: auto; margin-right: 10px;">
+          <div class="logo-text">
+            <span class="logo-title">宜蘭長福會</span>
+            <span class="logo-subtitle">長期照護及社會福祉推廣協會</span>
+          </div>
+        </a>
+        
+        <nav class="nav-desktop">
+          <ul class="nav-list">
+            <li class="nav-item"><a href="index.html" class="nav-link">首頁</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">關於我們</a></li>
+            <li class="nav-item"><a href="services.html" class="nav-link">核心業務</a></li>
+            <li class="nav-item"><a href="news.html" class="nav-link">最新消息</a></li>
+            <li class="nav-item"><a href="courses.html" class="nav-link">課程訓練</a></li>
+            <li class="nav-item"><a href="jobs.html" class="nav-link">招募徵才</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">聯絡我們</a></li>
+          </ul>
+        </nav>
+        
+        <button class="menu-toggle" id="menuToggle" aria-label="開啟選單">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    
+    <nav class="nav-mobile" id="navMobile">
+      <ul class="nav-list">
+        <li><a href="index.html" class="nav-link">首頁</a></li>
+        <li><a href="about.html" class="nav-link">關於我們</a></li>
+        <li><a href="services.html" class="nav-link">核心業務</a></li>
+        <li><a href="news.html" class="nav-link">最新消息</a></li>
+        <li><a href="courses.html" class="nav-link">課程訓練</a></li>
+        <li><a href="jobs.html" class="nav-link">招募徵才</a></li>
+        <li><a href="contact.html" class="nav-link">聯絡我們</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page Header -->
+  <section class="hero hero-bg-image" style="padding-bottom: var(--spacing-2xl);">
+    <div class="container">
+      <div class="hero-content" style="max-width: 800px; margin: 0 auto;">
+        <nav style="font-size: var(--font-size-sm); color: var(--color-gray-500); margin-bottom: var(--spacing-md);">
+          <a href="index.html" style="color: var(--color-gray-500);">首頁</a> / 最新消息
+        </nav>
+        <h1 class="hero-title" style="font-size: var(--font-size-4xl);">最新消息</h1>
+        <p class="hero-description">掌握協會最新動態、活動訊息與重要公告</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- News List -->
+  <section class="section">
+    <div class="container">
+      <!-- Filter Tabs -->
+      <div class="news-filter-tabs reveal">
+        <button class="news-filter-tab active" data-category="all">全部</button>
+        <button class="news-filter-tab" data-category="活動">活動訊息</button>
+        <button class="news-filter-tab" data-category="公告">公告通知</button>
+        <button class="news-filter-tab" data-category="課程">課程資訊</button>
+        <button class="news-filter-tab" data-category="徵才">徵才訊息</button>
+      </div>
+      
+      <!-- News List -->
+      <div class="news-list" id="newsList">
+        <!-- Will be populated by JS -->
+      </div>
+      
+      <!-- Pagination -->
+      <div class="news-pagination" id="newsPagination">
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="assets/images/logo.png" alt="宜蘭長福會 Logo" class="footer-logo-img" style="height: 40px; width: auto; margin-right: 10px;">
+            <span class="footer-logo-text">宜蘭長福會</span>
+          </div>
+          <p class="footer-description">社團法人宜蘭縣長期照護及社會福祉推廣協會</p>
+        </div>
+        <div>
+          <h4 class="footer-title">快速連結</h4>
+          <nav class="footer-links">
+            <a href="about.html" class="footer-link">關於我們</a>
+            <a href="services.html" class="footer-link">核心業務</a>
+            <a href="news.html" class="footer-link">最新消息</a>
+            <a href="contact.html" class="footer-link">聯絡我們</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer-title">服務項目</h4>
+          <nav class="footer-links">
+            <a href="services.html#elder-care" class="footer-link">長者照顧服務</a>
+            <a href="services.html#dementia" class="footer-link">失智社區服務據點</a>
+            <a href="services.html#assistive" class="footer-link">輔具資源服務</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer-title">聯絡資訊</h4>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon"><i class="ph ph-map-pin"></i></span>
+              <span>宜蘭縣冬山鄉八寶路 25 號</span>
+            </div>
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon"><i class="ph ph-phone"></i></span>
+              <span>+886 3 958 1020</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2026 社團法人宜蘭縣長期照護及社會福祉推廣協會 版權所有</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Sample news data (will be loaded from JSON in production)
+    const newsData = [
+      {
+        id: 'news-001',
+        title: '113年度照顧服務員訓練課程開放報名',
+        category: '課程',
+        date: '2026-01-15',
+        excerpt: '本會將於113年3月開辦照顧服務員訓練課程，歡迎有興趣投入長照服務的民眾踴躍報名參加...',
+        image: '📚'
+      },
+      {
+        id: 'news-002',
+        title: '春節服務時間公告',
+        category: '公告',
+        date: '2026-01-10',
+        excerpt: '因應農曆春節假期，本會各服務據點將於1月28日至2月3日暫停服務，造成不便敬請見諒...',
+        image: '📢'
+      },
+      {
+        id: 'news-003',
+        title: '冬山日照中心新年活動圓滿成功',
+        category: '活動',
+        date: '2026-01-05',
+        excerpt: '冬山日照中心於日前舉辦新年慶祝活動，長者們一同參與手作、團康遊戲，現場氣氛溫馨熱鬧...',
+        image: '🎉'
+      },
+      {
+        id: 'news-004',
+        title: '誠徵照顧服務員數名',
+        category: '徵才',
+        date: '2025-12-20',
+        excerpt: '本會冬山日照中心誠徵照顧服務員數名，歡迎具有照顧服務員資格者踴躍應徵...',
+        image: '💼'
+      },
+      {
+        id: 'news-005',
+        title: '失智照護支持團體活動預告',
+        category: '活動',
+        date: '2025-12-15',
+        excerpt: '本會將於1月舉辦失智照護者支持團體活動，邀請專業講師分享照護技巧與紓壓方法...',
+        image: '🤝'
+      }
+    ];
+    
+    let currentFilter = 'all';
+    
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
+    }
+    
+    function renderNews(filter = 'all') {
+      const newsList = document.getElementById('newsList');
+      const filteredNews = filter === 'all' 
+        ? newsData 
+        : newsData.filter(n => n.category === filter);
+      
+      newsList.innerHTML = filteredNews.map(news => `
+        <article class="news-item reveal">
+          <div class="news-item-image">${news.image}</div>
+          <div class="news-item-body">
+            <div class="news-item-meta">
+              <span>${formatDate(news.date)}</span>
+              <span style="background: var(--color-primary-bg); color: var(--color-primary); padding: 2px 8px; border-radius: var(--radius-sm);">${news.category}</span>
+            </div>
+            <h3 class="news-item-title">${news.title}</h3>
+            <p class="news-item-excerpt">${news.excerpt}</p>
+            <a href="news-detail.html?id=${news.id}" class="news-item-link">閱讀更多 →</a>
+          </div>
+        </article>
+      `).join('');
+      
+      // Re-init scroll reveal
+      if (window.SiteApp && window.SiteApp.initScrollReveal) {
+        window.SiteApp.initScrollReveal();
+      }
+    }
+    
+    // Filter tabs
+    document.querySelectorAll('.news-filter-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.news-filter-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentFilter = tab.dataset.category;
+        renderNews(currentFilter);
+      });
+    });
+    
+    // Initial render
+    document.addEventListener('DOMContentLoaded', () => {
+      renderNews();
+    });
+  </script>
+</body>
+</html>

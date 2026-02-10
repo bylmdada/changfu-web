@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="宜蘭縣長期照護及社會福祉推廣協會招募徵才 - 加入長照服務團隊">
+  <title>招募徵才 - 社團法人宜蘭縣長期照護及社會福祉推廣協會</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <style>
+    .jobs-grid {
+      display: grid;
+      gap: var(--spacing-lg);
+    }
+    .job-card {
+      background: var(--color-white);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    }
+    .job-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .job-header {
+      padding: var(--spacing-lg);
+      border-bottom: 1px solid var(--color-gray-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+    }
+    .job-title-group {
+      flex: 1;
+    }
+    .job-title {
+      font-size: var(--font-size-xl);
+      font-weight: 600;
+      margin: 0 0 var(--spacing-xs);
+      color: var(--color-gray-800);
+    }
+    .job-meta {
+      display: flex;
+      gap: var(--spacing-md);
+      flex-wrap: wrap;
+      font-size: var(--font-size-sm);
+      color: var(--color-gray-500);
+    }
+    .job-status {
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+    }
+    .job-status.active {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+    .job-status.closed {
+      background: var(--color-gray-200);
+      color: var(--color-gray-500);
+    }
+    .job-body {
+      padding: var(--spacing-lg);
+    }
+    .job-section {
+      margin-bottom: var(--spacing-lg);
+    }
+    .job-section:last-child {
+      margin-bottom: 0;
+    }
+    .job-section-title {
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-sm);
+    }
+    .job-section-content {
+      font-size: var(--font-size-sm);
+      color: var(--color-gray-700);
+      line-height: 1.7;
+    }
+    .job-section-content ul {
+      margin: 0;
+      padding-left: var(--spacing-lg);
+    }
+    .job-section-content li {
+      margin-bottom: var(--spacing-xs);
+    }
+    .job-footer {
+      padding: var(--spacing-lg);
+      background: var(--color-gray-50);
+      display: flex;
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+    }
+    .job-tags {
+      display: flex;
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+    }
+    .job-tag {
+      background: var(--color-primary-bg);
+      color: var(--color-primary);
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-xs);
+      font-weight: 500;
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-md);
+    }
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-md);
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+    }
+    .benefit-icon {
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <img src="assets/images/logo.png" alt="宜蘭長福會 Logo" class="logo-img" style="height: 50px; width: auto; margin-right: 10px;">
+          <div class="logo-text">
+            <span class="logo-title">宜蘭長福會</span>
+            <span class="logo-subtitle">長期照護及社會福祉推廣協會</span>
+          </div>
+        </a>
+        
+        <nav class="nav-desktop">
+          <ul class="nav-list">
+            <li class="nav-item"><a href="index.html" class="nav-link">首頁</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">關於我們</a></li>
+            <li class="nav-item"><a href="services.html" class="nav-link">核心業務</a></li>
+            <li class="nav-item"><a href="news.html" class="nav-link">最新消息</a></li>
+            <li class="nav-item"><a href="courses.html" class="nav-link">課程訓練</a></li>
+            <li class="nav-item"><a href="jobs.html" class="nav-link">招募徵才</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">聯絡我們</a></li>
+          </ul>
+        </nav>
+        
+        <button class="menu-toggle" id="menuToggle" aria-label="開啟選單">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    
+    <nav class="nav-mobile" id="navMobile">
+      <ul class="nav-list">
+        <li><a href="index.html" class="nav-link">首頁</a></li>
+        <li><a href="about.html" class="nav-link">關於我們</a></li>
+        <li><a href="services.html" class="nav-link">核心業務</a></li>
+        <li><a href="news.html" class="nav-link">最新消息</a></li>
+        <li><a href="courses.html" class="nav-link">課程訓練</a></li>
+        <li><a href="jobs.html" class="nav-link">招募徵才</a></li>
+        <li><a href="contact.html" class="nav-link">聯絡我們</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page Header -->
+  <section class="hero hero-bg-image" style="padding-bottom: var(--spacing-2xl);">
+    <div class="container">
+      <div class="hero-content" style="max-width: 800px; margin: 0 auto;">
+        <nav style="font-size: var(--font-size-sm); color: var(--color-gray-500); margin-bottom: var(--spacing-md);">
+          <a href="index.html" style="color: var(--color-gray-500);">首頁</a> / 招募徵才
+        </nav>
+        <h1 class="hero-title" style="font-size: var(--font-size-4xl);">招募徵才</h1>
+        <p class="hero-description">加入我們的專業團隊，一起為長照服務貢獻心力</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Join Us -->
+  <section class="section bg-gray">
+    <div class="container">
+      <h2 class="section-title text-center reveal">為什麼加入我們？</h2>
+      <div class="benefits-grid reveal">
+        <div class="benefit-item">
+          <span class="benefit-icon"><i class="ph ph-currency-dollar"></i></span>
+          <div>
+            <strong>穩定薪資</strong>
+            <p style="font-size: var(--font-size-sm); color: var(--color-gray-600); margin: 0;">具競爭力的薪資待遇</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon"><i class="ph ph-book-open"></i></span>
+          <div>
+            <strong>專業培訓</strong>
+            <p style="font-size: var(--font-size-sm); color: var(--color-gray-600); margin: 0;">完整的在職教育訓練</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon"><i class="ph ph-heartbeat"></i></span>
+          <div>
+            <strong>勞健保</strong>
+            <p style="font-size: var(--font-size-sm); color: var(--color-gray-600); margin: 0;">依法投保勞健保</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon"><i class="ph ph-coffee"></i></span>
+          <div>
+            <strong>休假制度</strong>
+            <p style="font-size: var(--font-size-sm); color: var(--color-gray-600); margin: 0;">優於勞基法的休假</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon"><i class="ph ph-trend-up"></i></span>
+          <div>
+            <strong>晉升機會</strong>
+            <p style="font-size: var(--font-size-sm); color: var(--color-gray-600); margin: 0;">明確的職涯發展路徑</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon"><i class="ph ph-users"></i></span>
+          <div>
+            <strong>團隊氛圍</strong>
+            <p style="font-size: var(--font-size-sm); color: var(--color-gray-600); margin: 0;">友善互助的工作環境</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Job Listings -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title text-center reveal">目前職缺</h2>
+      <div class="jobs-grid" id="jobsGrid">
+        <!-- Will be populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Apply Process -->
+  <section class="section bg-gray">
+    <div class="container container-narrow">
+      <h2 class="section-title text-center reveal">應徵流程</h2>
+      <div class="reveal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-lg); text-align: center;">
+        <div>
+          <div style="width: 60px; height: 60px; background: var(--color-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xl); font-weight: 700; margin: 0 auto var(--spacing-md);">1</div>
+          <h4>投遞履歷</h4>
+          <p style="font-size: var(--font-size-sm); color: var(--color-gray-600);">透過email或親洽本會投遞履歷</p>
+        </div>
+        <div>
+          <div style="width: 60px; height: 60px; background: var(--color-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xl); font-weight: 700; margin: 0 auto var(--spacing-md);">2</div>
+          <h4>資格審核</h4>
+          <p style="font-size: var(--font-size-sm); color: var(--color-gray-600);">人事單位進行資格初審</p>
+        </div>
+        <div>
+          <div style="width: 60px; height: 60px; background: var(--color-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xl); font-weight: 700; margin: 0 auto var(--spacing-md);">3</div>
+          <h4>面試通知</h4>
+          <p style="font-size: var(--font-size-sm); color: var(--color-gray-600);">通過初審後安排面試</p>
+        </div>
+        <div>
+          <div style="width: 60px; height: 60px; background: var(--color-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xl); font-weight: 700; margin: 0 auto var(--spacing-md);">4</div>
+          <h4>錄取報到</h4>
+          <p style="font-size: var(--font-size-sm); color: var(--color-gray-600);">錄取通知及安排報到</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section">
+    <div class="container reveal">
+      <h2 class="cta-title">想加入我們的團隊嗎？</h2>
+      <p class="cta-description">歡迎將您的履歷寄至 hr@yilan-ltc.org.tw 或親洽本會洽詢。</p>
+      <div class="cta-actions">
+        <a href="mailto:hr@yilan-ltc.org.tw" class="btn btn-white btn-lg"><i class="ph ph-envelope" style="margin-right: 8px;"></i> 投遞履歷</a>
+        <a href="contact.html" class="btn btn-ghost btn-lg">聯絡我們</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="assets/images/logo.png" alt="宜蘭長福會 Logo" class="footer-logo-img" style="height: 40px; width: auto; margin-right: 10px;">
+            <span class="footer-logo-text">宜蘭長福會</span>
+          </div>
+          <p class="footer-description">社團法人宜蘭縣長期照護及社會福祉推廣協會</p>
+        </div>
+        <div>
+          <h4 class="footer-title">快速連結</h4>
+          <nav class="footer-links">
+            <a href="about.html" class="footer-link">關於我們</a>
+            <a href="services.html" class="footer-link">核心業務</a>
+            <a href="news.html" class="footer-link">最新消息</a>
+            <a href="contact.html" class="footer-link">聯絡我們</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer-title">服務項目</h4>
+          <nav class="footer-links">
+            <a href="services.html#elder-care" class="footer-link">長者照顧服務</a>
+            <a href="services.html#dementia" class="footer-link">失智社區服務據點</a>
+            <a href="services.html#assistive" class="footer-link">輔具資源服務</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer-title">聯絡資訊</h4>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon"><i class="ph ph-map-pin"></i></span>
+              <span>宜蘭縣冬山鄉八寶路 25 號</span>
+            </div>
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon"><i class="ph ph-phone"></i></span>
+              <span>+886 3 958 1020</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2026 社團法人宜蘭縣長期照護及社會福祉推廣協會 版權所有</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Sample job data
+    const jobsData = [
+      {
+        id: 'job-001',
+        title: '照顧服務員',
+        location: '冬山日間照顧中心',
+        type: '全職',
+        status: 'active',
+        statusText: '招募中',
+        postedDate: '2026-01-10',
+        salary: '月薪 32,000 ~ 38,000',
+        requirements: [
+          '具照顧服務員結業證書',
+          '具備照顧服務員單一級技術士證照者優先',
+          '具相關工作經驗者優先',
+          '需配合輪班制度'
+        ],
+        duties: [
+          '協助長者日常生活照顧（如進食、如廁、移位等）',
+          '執行健康促進與休閒活動',
+          '觀察並記錄長者健康狀況',
+          '協助維護環境整潔'
+        ],
+        benefits: ['勞健保', '三節獎金', '年終獎金', '在職訓練']
+      },
+      {
+        id: 'job-002',
+        title: '社會工作員',
+        location: '本會冬山辦公室',
+        type: '全職',
+        status: 'active',
+        statusText: '招募中',
+        postedDate: '2026-01-05',
+        salary: '月薪 35,000 ~ 42,000',
+        requirements: [
+          '社會工作相關科系畢業',
+          '具社會工作師證照者優先',
+          '熟悉長照2.0服務體系',
+          '具個案管理經驗者優先'
+        ],
+        duties: [
+          '長照服務個案評估與管理',
+          '服務計畫擬定與執行追蹤',
+          '資源連結與轉介服務',
+          '相關行政文書作業'
+        ],
+        benefits: ['勞健保', '三節獎金', '年終獎金', '專業津貼']
+      }
+    ];
+    
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
+    }
+    
+    function renderJobs() {
+      const grid = document.getElementById('jobsGrid');
+      
+      if (jobsData.length === 0) {
+        grid.innerHTML = `
+          <div style="text-align: center; padding: var(--spacing-3xl); color: var(--color-gray-500);">
+          <div style="text-align: center; padding: var(--spacing-3xl); color: var(--color-gray-500);">
+            <p style="font-size: 4rem; line-height: 1;"><i class="ph ph-briefcase"></i></p>
+            <p>目前暫無招募職缺</p>
+            <p style="font-size: var(--font-size-sm);">歡迎投遞履歷加入人才庫</p>
+          </div>
+        `;
+        return;
+      }
+      
+      grid.innerHTML = jobsData.map(job => `
+        <article class="job-card reveal">
+          <div class="job-header">
+            <div class="job-title-group">
+              <h3 class="job-title">${job.title}</h3>
+              <div class="job-meta">
+              <div class="job-meta">
+                <span><i class="ph ph-map-pin"></i> ${job.location}</span>
+                <span><i class="ph ph-briefcase"></i> ${job.type}</span>
+                <span><i class="ph ph-calendar-blank"></i> ${formatDate(job.postedDate)} 刊登</span>
+              </div>
+              </div>
+            </div>
+            <span class="job-status ${job.status}">${job.statusText}</span>
+          </div>
+          <div class="job-body">
+            <div class="job-section">
+              <div class="job-section-title"><i class="ph ph-currency-dollar"></i> 薪資待遇</div>
+              <div class="job-section-content">${job.salary}</div>
+            </div>
+            <div class="job-section">
+              <div class="job-section-title"><i class="ph ph-clipboard-text"></i> 工作職責</div>
+              <div class="job-section-content">
+                <ul>
+                  ${job.duties.map(duty => `<li>${duty}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+            <div class="job-section">
+              <div class="job-section-title"><i class="ph ph-check-circle"></i> 應徵條件</div>
+              <div class="job-section-content">
+                <ul>
+                  ${job.requirements.map(req => `<li>${req}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+            <div class="job-tags">
+              ${job.benefits.map(b => `<span class="job-tag">${b}</span>`).join('')}
+            </div>
+          </div>
+          <div class="job-footer">
+            <a href="mailto:hr@yilan-ltc.org.tw?subject=應徵${job.title}" class="btn btn-primary">立即應徵</a>
+            <a href="contact.html?subject=job&job=${job.id}" class="btn" style="background: var(--color-gray-100); color: var(--color-gray-700);">詢問詳情</a>
+          </div>
+        </article>
+      `).join('');
+    }
+    
+    document.addEventListener('DOMContentLoaded', renderJobs);
+  </script>
+</body>
+</html>
