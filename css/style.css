@@ -399,12 +399,15 @@ p {
   top: var(--header-height-mobile);
   left: 0;
   right: 0;
-  bottom: 0;
+  height: calc(100vh - var(--header-height-mobile));
+  height: calc(100dvh - var(--header-height-mobile)); /* Better for mobile */
   background: var(--color-white);
   padding: var(--spacing-lg);
   transform: translateX(100%);
   transition: transform var(--transition-base);
   overflow-y: auto;
+  z-index: 999; /* Ensure it stays on top */
+  border-top: 1px solid var(--border-subtle);
 }
 
 .nav-mobile.active {
@@ -504,6 +507,22 @@ p {
   height: 8px;
   background: rgba(243, 156, 18, 0.3); /* Accent underline */
   z-index: -1;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.25rem; /* Smaller on mobile to prevent "orphans" */
+  }
+  
+  .hero-stats {
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
 }
 
 .hero-description {
