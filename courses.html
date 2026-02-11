@@ -257,7 +257,7 @@
       <h2 class="cta-title">想報名課程或了解更多？</h2>
       <p class="cta-description">歡迎來電洽詢或線上留言，我們將盡快為您服務。</p>
       <div class="cta-actions">
-        <a href="contact.html" class="btn btn-white btn-lg">線上諮詢</a>
+        <a href="#" class="btn btn-white btn-lg" onclick="window.open(window.CONFIG.forms.contact || 'contact.html', '_blank'); return false;">線上諮詢</a>
         <a href="tel:+88639581020" class="btn btn-ghost btn-lg"><i class="ph ph-phone" style="margin-right: 8px;"></i> 撥打報名專線</a>
       </div>
     </div>
@@ -311,103 +311,11 @@
     </div>
   </footer>
 
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
   <script src="js/main.js"></script>
   <script>
-    // Sample course data
-    const coursesData = [
-      {
-        id: 'course-001',
-        title: '113年度第1期照顧服務員訓練',
-        category: '照顧服務員訓練',
-        status: 'open',
-        statusText: '報名中',
-        startDate: '2026-03-01',
-        endDate: '2026-04-15',
-        hours: 90,
-        location: '本會冬山訓練教室',
-        fee: '免費（政府補助）',
-        quota: 30,
-        description: '符合長照服務法規定之90小時照顧服務員訓練課程，包含核心課程及實習課程，完成訓練可取得結業證書，投入長照服務行列。'
-      },
-      {
-        id: 'course-002',
-        title: '失智照護專業訓練課程',
-        category: '專業進修課程',
-        status: 'upcoming',
-        statusText: '即將開課',
-        startDate: '2026-04-10',
-        endDate: '2026-04-12',
-        hours: 20,
-        location: '宜蘭縣政府會議室',
-        fee: '免費',
-        quota: 40,
-        description: '針對現職照顧服務員設計之失智症照護進階課程，內容涵蓋失智症認識、溝通技巧、行為問題處理等專業知能。'
-      }
-    ];
-    
-    function formatDate(dateString) {
-      const date = new Date(dateString);
-      return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
-    }
-    
-    function renderCourses() {
-      const grid = document.getElementById('coursesGrid');
-      
-      if (coursesData.length === 0) {
-        grid.innerHTML = `
-          <div class="no-courses">
-            <p style="font-size: var(--font-size-xl);">📚</p>
-            <p>目前尚無招生中課程</p>
-            <p style="font-size: var(--font-size-sm);">請稍後再來查看，或訂閱我們的消息通知</p>
-          </div>
-        `;
-        return;
-      }
-      
-      grid.innerHTML = coursesData.map(course => `
-        <article class="course-card reveal">
-          <div class="course-header">
-            <span class="course-status ${course.status}">${course.statusText}</span>
-            <h3 class="course-title">${course.title}</h3>
-            <div class="course-category">${course.category}</div>
-          </div>
-          <div class="course-body">
-            <div class="course-info">
-              <div class="course-info-item">
-                <span class="course-info-label">課程期間</span>
-                <span class="course-info-value">${formatDate(course.startDate)} ~ ${formatDate(course.endDate)}</span>
-              </div>
-              <div class="course-info-item">
-                <span class="course-info-label">課程時數</span>
-                <span class="course-info-value">${course.hours} 小時</span>
-              </div>
-              <div class="course-info-item">
-                <span class="course-info-label">上課地點</span>
-                <span class="course-info-value">${course.location}</span>
-              </div>
-              <div class="course-info-item">
-                <span class="course-info-label">課程費用</span>
-                <span class="course-info-value">${course.fee}</span>
-              </div>
-              <div class="course-info-item">
-                <span class="course-info-label">招生名額</span>
-                <span class="course-info-value">${course.quota} 名</span>
-              </div>
-            </div>
-            <p class="course-description">${course.description}</p>
-            <div class="course-footer">
-              ${course.status === 'open' 
-                ? `<a href="contact.html?subject=course&course=${course.id}" class="btn btn-primary">立即報名</a>` 
-                : `<button class="btn" disabled style="background: var(--color-gray-200); color: var(--color-gray-500);">尚未開放報名</button>`
-              }
-              <button class="btn" style="background: var(--color-gray-100); color: var(--color-gray-700);">查看詳情</button>
-            </div>
-          </div>
-        </article>
-      `).join('');
-    }
-    
-    document.addEventListener('DOMContentLoaded', renderCourses);
+    // Data is loaded and rendered by js/main.js
   </script>
 </body>
 </html>

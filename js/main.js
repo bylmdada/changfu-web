@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 初始化新功能
   initA11yWidget();
   initBackToTop();
+  initMobileNav();
   
   // 載入資料並渲染
   await loadSiteData();
@@ -26,6 +27,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderNews();
   renderLocations();
   renderServicesPage();
+  renderJobs();
+  renderCourses();
+  renderNewsPage();
   
   // 初始化靜態頁面功能
   initContactForm();
@@ -39,16 +43,28 @@ document.addEventListener("DOMContentLoaded", async () => {
 // ============================================
 async function loadSiteData() {
   try {
-    const response = await fetch(DATA_URL);
-    if (!response.ok) {
-      throw new Error("Failed to load site data");
+    // 1. Fetch site data first (base)
+    const response = await fetch("data/site-data.json");
+    window.siteData = await response.json();
+
+    // 2. Try to fetch dynamic data from Google Sheets (if configured)
+    if (window.API && window.CONFIG && window.CONFIG.useRemoteData) {
+      const dynamicNews = await window.API.fetchData('news');
+      if (dynamicNews && dynamicNews.length > 0) window.siteData.news = dynamicNews;
+
+      const dynamicJobs = await window.API.fetchData('jobs');
+      if (dynamicJobs && dynamicJobs.length > 0) window.siteData.jobs = dynamicJobs;
+      
+      const dynamicCourses = await window.API.fetchData('courses');
+      if (dynamicCourses && dynamicCourses.length > 0) window.siteData.courses = dynamicCourses;
     }
-    siteData = await response.json();
-    console.log("Site data loaded successfully");
+
+    renderAll();
   } catch (error) {
     console.error("Error loading site data:", error);
-    // 使用內嵌的備用資料
-    siteData = getFallbackData();
+    // Render with fallback data if JSON fetch fails (critical error)
+    window.siteData = getFallbackData();
+    renderAll();
   }
 }
 
@@ -482,11 +498,24 @@ function renderNews() {
         if (item.coverImage) {
           imageHtml = `<div class="news-image-wrapper" style="height: 200px; overflow: hidden; margin: -1.5rem -1.5rem 1.5rem -1.5rem; border-radius: var(--radius-lg) var(--radius-lg) 0 0;"><img src="${item.coverImage}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: cover;"></div>`;
         }
+        
+        // Category Icon Mapping
+        let categoryIcon = 'ph-article';
+        if (item.category === '公告') categoryIcon = 'ph-megaphone';
+        else if (item.category === '活動') categoryIcon = 'ph-calendar-star';
+        else if (item.category === '課程') categoryIcon = 'ph-chalkboard-teacher';
+        else if (item.category === '徵才') categoryIcon = 'ph-briefcase';
+        
         return `
     <div class="news-card reveal">
       ${imageHtml}
-      <span class="news-date">${formatDate(item.publishDate)}</span>
-      <h3 class="news-title">${item.title}</h3>
+      <div class="news-meta" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+        <span class="news-category" style="display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; color: var(--color-primary); font-weight: 500; background: var(--color-gray-100); padding: 4px 12px; border-radius: 999px;">
+          <i class="ph ${categoryIcon}"></i> ${item.category}
+        </span>
+        <span class="news-date" style="font-size: 0.85rem; color: var(--color-gray-500);">${formatDate(item.publishDate)}</span>
+      </div>
+      <h3 class="news-title" style="margin-top: var(--spacing-xs);">${item.title}</h3>
       <p class="news-summary">${item.summary}</p>
       <a href="news.html#${item.id}" class="card-link" aria-label="閱讀更多關於${item.title}">
         閱讀更多 →
@@ -495,7 +524,6 @@ function renderNews() {
   `;
       },
     )
-
     .join("");
 
   // 重新初始化滾動揭示
@@ -648,6 +676,234 @@ function createLocationCard(location, type = '') {
 }
 
 // ============================================
+// 渲染招募徵才 (Jobs.html)
+// ============================================
+function renderJobs() {
+  const grid = document.getElementById('jobsGrid');
+  if (!grid || !siteData) return;
+  
+  const jobs = siteData.jobs || [];
+
+  if (jobs.length === 0) {
+    grid.innerHTML = `
+      <div style="text-align: center; padding: var(--spacing-3xl); color: var(--color-gray-500);">
+        <p style="font-size: 4rem; line-height: 1;"><i class="ph ph-briefcase"></i></p>
+        <p>目前暫無招募職缺</p>
+        <p style="font-size: var(--font-size-sm);">歡迎投遞履歷加入人才庫</p>
+      </div>
+    `;
+    return;
+  }
+  
+  grid.innerHTML = jobs.map(job => {
+    // Parse lists (handle both array from JSON and string from CSV)
+    const requirements = Array.isArray(job.requirements) 
+      ? job.requirements 
+      : (job.requirements || '').split('\n').filter(i => i.trim());
+      
+    const duties = Array.isArray(job.duties) 
+      ? job.duties 
+      : (job.duties || '').split('\n').filter(i => i.trim());
+      
+    const benefits = Array.isArray(job.benefits) 
+      ? job.benefits 
+      : (job.benefits || '').split('\n').filter(i => i.trim());
+
+    return `
+    <article class="job-card reveal">
+      <div class="job-header">
+        <div class="job-title-group">
+          <h3 class="job-title">${job.title}</h3>
+          <div class="job-meta">
+            <span><i class="ph ph-map-pin"></i> ${job.location}</span>
+            <span><i class="ph ph-briefcase"></i> ${job.type}</span>
+            <span><i class="ph ph-calendar-blank"></i> ${formatDate(job.postedDate)} 刊登</span>
+          </div>
+        </div>
+        <span class="job-status ${job.status}">${job.statusText || '招募中'}</span>
+      </div>
+      <div class="job-body">
+        <div class="job-section">
+          <div class="job-section-title"><i class="ph ph-currency-dollar"></i> 薪資待遇</div>
+          <div class="job-section-content">${job.salary}</div>
+        </div>
+        <div class="job-section">
+          <div class="job-section-title"><i class="ph ph-clipboard-text"></i> 工作職責</div>
+          <div class="job-section-content">
+            <ul>
+              ${duties.map(duty => `<li>${duty}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+        <div class="job-section">
+          <div class="job-section-title"><i class="ph ph-check-circle"></i> 應徵條件</div>
+          <div class="job-section-content">
+            <ul>
+              ${requirements.map(req => `<li>${req}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+        <div class="job-tags">
+          ${benefits.map(b => `<span class="job-tag">${b}</span>`).join('')}
+        </div>
+      </div>
+      <div class="job-footer">
+         <a href="#" class="btn btn-primary" onclick="window.open(window.CONFIG.forms.jobApply || 'contact.html?subject=job&job=${job.id}', '_blank'); return false;">立即應徵</a>
+        <a href="contact.html?subject=job&job=${job.id}" class="btn" style="background: var(--color-gray-100); color: var(--color-gray-700);">詢問詳情</a>
+      </div>
+    </article>
+  `}).join('');
+  
+  initScrollReveal();
+}
+
+// ============================================
+// 渲染課程訓練 (Courses.html)
+// ============================================
+function renderCourses() {
+  const grid = document.getElementById('coursesGrid');
+  if (!grid || !siteData) return;
+  
+  const courses = siteData.courses || [];
+  
+  if (courses.length === 0) {
+    grid.innerHTML = `
+      <div class="no-courses">
+        <p style="font-size: var(--font-size-xl);">📚</p>
+        <p>目前尚無招生中課程</p>
+        <p style="font-size: var(--font-size-sm);">請稍後再來查看，或訂閱我們的消息通知</p>
+      </div>
+    `;
+    return;
+  }
+  
+  grid.innerHTML = courses.map(course => `
+    <article class="course-card reveal">
+      <div class="course-header">
+        <span class="course-status ${course.status}">${course.statusText || '報名中'}</span>
+        <h3 class="course-title">${course.title}</h3>
+        <div class="course-category">${course.category}</div>
+      </div>
+      <div class="course-body">
+        <div class="course-info">
+          <div class="course-info-item">
+            <span class="course-info-label">課程期間</span>
+            <span class="course-info-value">${formatDate(course.startDate)} ~ ${formatDate(course.endDate)}</span>
+          </div>
+          <div class="course-info-item">
+            <span class="course-info-label">課程時數</span>
+            <span class="course-info-value">${course.hours} 小時</span>
+          </div>
+          <div class="course-info-item">
+            <span class="course-info-label">上課地點</span>
+            <span class="course-info-value">${course.location}</span>
+          </div>
+          <div class="course-info-item">
+            <span class="course-info-label">課程費用</span>
+            <span class="course-info-value">${course.fee}</span>
+          </div>
+          <div class="course-info-item">
+            <span class="course-info-label">招生名額</span>
+            <span class="course-info-value">${course.quota} 名</span>
+          </div>
+        </div>
+        <p class="course-description">${course.description}</p>
+        <div class="course-footer">
+          ${course.status === 'open' 
+            ? `<a href="#" onclick="window.open(window.CONFIG.forms.courseRegister || 'contact.html?subject=course&course=${course.id}', '_blank'); return false;" class="btn btn-primary">立即報名</a>` 
+            : `<button class="btn" disabled style="background: var(--color-gray-200); color: var(--color-gray-500);">尚未開放報名</button>`
+          }
+          <button class="btn" style="background: var(--color-gray-100); color: var(--color-gray-700);">查看詳情</button>
+        </div>
+      </div>
+    </article>
+  `).join('');
+  
+  initScrollReveal();
+}
+
+// ============================================
+// 渲染最新消息頁面 (News.html)
+// ============================================
+function renderNewsPage(filter = 'all') {
+  const newsList = document.getElementById('newsList');
+  if (!newsList || !siteData) return;
+  
+  const newsData = siteData.news || [];
+  
+  const filteredNews = filter === 'all' 
+    ? newsData 
+    : newsData.filter(n => n.category === filter);
+  
+  if (filteredNews.length === 0) {
+    newsList.innerHTML = `
+      <div style="text-align: center; padding: 4rem; color: var(--color-gray-500); grid-column: 1 / -1;">
+        <p style="font-size: 3rem; margin-bottom: 1rem;">📭</p>
+        <p>目前此分類尚無消息</p>
+      </div>
+    `;
+    return;
+  }
+  
+  newsList.innerHTML = filteredNews.map(news => {
+    let imageHtml = `<div class="news-item-image">${news.image || '📰'}</div>`;
+    if (news.coverImage) {
+      imageHtml = `<div class="news-item-image" style="background-image: url('${news.coverImage}'); background-size: cover; background-position: center;"></div>`;
+    }
+
+    return `
+    <article class="news-item reveal">
+      ${imageHtml}
+      <div class="news-item-body">
+        <div class="news-item-meta">
+          <span>${formatDate(news.publishDate || news.date)}</span>
+          <span style="background: var(--color-primary-bg); color: var(--color-primary); padding: 2px 8px; border-radius: var(--radius-sm);">${news.category}</span>
+        </div>
+        <h3 class="news-item-title">${news.title}</h3>
+        <p class="news-item-excerpt">${news.summary || news.excerpt}</p>
+        <a href="news.html#${news.id}" class="news-item-link" onclick="alert('詳細內容頁面尚未實作，敬請期待！'); return false;">閱讀更多 →</a>
+      </div>
+    </article>
+  `}).join('');
+  
+  // Re-init scroll reveal
+  if (window.SiteApp && window.SiteApp.initScrollReveal) {
+    window.SiteApp.initScrollReveal();
+  } else if (typeof initScrollReveal === 'function') {
+    initScrollReveal();
+  }
+}
+
+
+// ============================================
+// Render All Function
+// ============================================
+function renderAll() {
+  // Common renderers
+  if (typeof renderServices === 'function') renderServices();
+  if (typeof renderLocations === 'function') renderLocations();
+  if (typeof renderNews === 'function') renderNews();
+  if (typeof renderJobs === 'function') renderJobs();
+  if (typeof renderCourses === 'function') renderCourses();
+  
+  // Specific page renderers
+  if (typeof renderServicesPage === 'function') renderServicesPage();
+  if (typeof renderNewsPage === 'function') {
+      // Check if we are on the news page
+      if (document.getElementById('newsList')) {
+          renderNewsPage();
+      }
+  }
+
+  // Re-init scroll reveal after rendering
+  if (window.SiteApp && window.SiteApp.initScrollReveal) {
+    window.SiteApp.initScrollReveal();
+  } else if (typeof initScrollReveal === 'function') {
+    initScrollReveal();
+  }
+}
+
+// ============================================
 // 匯出函數（供其他頁面使用）
 // ============================================
 window.SiteApp = {
@@ -655,10 +911,15 @@ window.SiteApp = {
   renderServices,
   renderLocations,
   renderNews,
+  renderNewsPage,
+  renderJobs,
+  renderCourses,
   formatDate,
   truncate,
   initContactForm,
   initA11yWidget,
   initBackToTop,
-  initHeroStats
+  initHeroStats,
+  initMobileNav,
+  renderAll
 };

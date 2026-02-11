@@ -183,11 +183,11 @@
     <div class="container">
       <!-- Filter Tabs -->
       <div class="news-filter-tabs reveal">
-        <button class="news-filter-tab active" data-category="all">全部</button>
-        <button class="news-filter-tab" data-category="活動">活動訊息</button>
-        <button class="news-filter-tab" data-category="公告">公告通知</button>
-        <button class="news-filter-tab" data-category="課程">課程資訊</button>
-        <button class="news-filter-tab" data-category="徵才">徵才訊息</button>
+        <button class="news-filter-tab active" data-category="all"><i class="ph ph-squares-four"></i> 全部</button>
+        <button class="news-filter-tab" data-category="活動"><i class="ph ph-calendar-star"></i> 活動訊息</button>
+        <button class="news-filter-tab" data-category="公告"><i class="ph ph-megaphone"></i> 公告通知</button>
+        <button class="news-filter-tab" data-category="課程"><i class="ph ph-chalkboard-teacher"></i> 課程資訊</button>
+        <button class="news-filter-tab" data-category="徵才"><i class="ph ph-briefcase"></i> 徵才訊息</button>
       </div>
       
       <!-- News List -->
@@ -252,100 +252,34 @@
     </div>
   </footer>
 
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
   <script src="js/main.js"></script>
   <script>
     // Sample news data (will be loaded from JSON in production)
-    const newsData = [
-      {
-        id: 'news-001',
-        title: '113年度照顧服務員訓練課程開放報名',
-        category: '課程',
-        date: '2026-01-15',
-        excerpt: '本會將於113年3月開辦照顧服務員訓練課程，歡迎有興趣投入長照服務的民眾踴躍報名參加...',
-        image: '📚'
-      },
-      {
-        id: 'news-002',
-        title: '春節服務時間公告',
-        category: '公告',
-        date: '2026-01-10',
-        excerpt: '因應農曆春節假期，本會各服務據點將於1月28日至2月3日暫停服務，造成不便敬請見諒...',
-        image: '📢'
-      },
-      {
-        id: 'news-003',
-        title: '冬山日照中心新年活動圓滿成功',
-        category: '活動',
-        date: '2026-01-05',
-        excerpt: '冬山日照中心於日前舉辦新年慶祝活動，長者們一同參與手作、團康遊戲，現場氣氛溫馨熱鬧...',
-        image: '🎉'
-      },
-      {
-        id: 'news-004',
-        title: '誠徵照顧服務員數名',
-        category: '徵才',
-        date: '2025-12-20',
-        excerpt: '本會冬山日照中心誠徵照顧服務員數名，歡迎具有照顧服務員資格者踴躍應徵...',
-        image: '💼'
-      },
-      {
-        id: 'news-005',
-        title: '失智照護支持團體活動預告',
-        category: '活動',
-        date: '2025-12-15',
-        excerpt: '本會將於1月舉辦失智照護者支持團體活動，邀請專業講師分享照護技巧與紓壓方法...',
-        image: '🤝'
-      }
-    ];
-    
-    let currentFilter = 'all';
-    
-    function formatDate(dateString) {
-      const date = new Date(dateString);
-      return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
-    }
-    
-    function renderNews(filter = 'all') {
-      const newsList = document.getElementById('newsList');
-      const filteredNews = filter === 'all' 
-        ? newsData 
-        : newsData.filter(n => n.category === filter);
-      
-      newsList.innerHTML = filteredNews.map(news => `
-        <article class="news-item reveal">
-          <div class="news-item-image">${news.image}</div>
-          <div class="news-item-body">
-            <div class="news-item-meta">
-              <span>${formatDate(news.date)}</span>
-              <span style="background: var(--color-primary-bg); color: var(--color-primary); padding: 2px 8px; border-radius: var(--radius-sm);">${news.category}</span>
-            </div>
-            <h3 class="news-item-title">${news.title}</h3>
-            <p class="news-item-excerpt">${news.excerpt}</p>
-            <a href="news-detail.html?id=${news.id}" class="news-item-link">閱讀更多 →</a>
-          </div>
-        </article>
-      `).join('');
-      
-      // Re-init scroll reveal
-      if (window.SiteApp && window.SiteApp.initScrollReveal) {
-        window.SiteApp.initScrollReveal();
-      }
-    }
-    
     // Filter tabs
     document.querySelectorAll('.news-filter-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.news-filter-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        currentFilter = tab.dataset.category;
-        renderNews(currentFilter);
+        const currentFilter = tab.dataset.category;
+        
+        if (window.SiteApp && window.SiteApp.renderNewsPage) {
+           window.SiteApp.renderNewsPage(currentFilter);
+        }
       });
     });
     
-    // Initial render
-    document.addEventListener('DOMContentLoaded', () => {
-      renderNews();
-    });
+    // Initial render handled by main.js init, but we need to ensure renderNewsPage is called specifically for this page if not in global init
+    // Since main.js calls renderJobs/renderCourses but not explicit renderNewsPage, we might need to add it there or here.
+    // Let's add it to main.js in next step or handling it here.
+    // Actually, I'll add `renderNewsPage()` call to main.js init in a separate step or just call it here once data is ready.
+    // But since main.js loads data async, we should rely on main.js to call it or use a listener.
+    // For now, let's assume main.js will be updated to call it, or we simply rely on the fact that script execution order might make SiteApp available.
+    // However, data loading is async. 
+    // Best practice: main.js should identify the page and call appropriate render.
+    // I added renderServicesPage() to main.js previously. I should add renderNewsPage() there too.
+  </script>
   </script>
 </body>
 </html>

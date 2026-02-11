@@ -41,6 +41,7 @@
   
   /* Metrics */
   --header-height: 64px; /* More compact header */
+  --header-height-mobile: 64px;
   --radius-sm: 4px;
   --radius-md: 6px; /* Vercel standard */
   --radius-lg: 8px;

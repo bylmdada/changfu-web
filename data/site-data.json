@@ -157,7 +157,7 @@
       "address": "宜蘭縣冬山鄉照安路 56 號",
       "latitude": null,
       "longitude": null,
-      "phone": "請洽詢",
+      "phone": "0958-595903",
       "contactPerson": "",
       "serviceHours": "請洽詢",
       "capacity": null,
@@ -194,10 +194,10 @@
       "serviceTypeId": "dementia-center",
       "locationType": "樂智據點",
       "township": "三星",
-      "address": "宜蘭縣三星鄉三星路二段 97-1 號",
+      "address": "宜蘭縣三星鄉三星路一段 548 號",
       "latitude": null,
       "longitude": null,
-      "phone": "請洽詢",
+      "phone": "0958-595903",
       "contactPerson": "",
       "serviceHours": "請洽詢",
       "capacity": null,
@@ -244,7 +244,83 @@
       "author": "系統管理員"
     }
   ],
-  "courses": [],
-  "jobs": [],
+  "courses": [
+    {
+      "id": "course-001",
+      "title": "113年度第1期照顧服務員訓練",
+      "category": "照顧服務員訓練",
+      "status": "open",
+      "statusText": "報名中",
+      "startDate": "2026-03-01",
+      "endDate": "2026-04-15",
+      "hours": 90,
+      "location": "本會冬山訓練教室",
+      "fee": "免費（政府補助）",
+      "quota": 30,
+      "description": "符合長照服務法規定之90小時照顧服務員訓練課程，包含核心課程及實習課程，完成訓練可取得結業證書，投入長照服務行列。"
+    },
+    {
+      "id": "course-002",
+      "title": "失智照護專業訓練課程",
+      "category": "專業進修課程",
+      "status": "upcoming",
+      "statusText": "即將開課",
+      "startDate": "2026-04-10",
+      "endDate": "2026-04-12",
+      "hours": 20,
+      "location": "宜蘭縣政府會議室",
+      "fee": "免費",
+      "quota": 40,
+      "description": "針對現職照顧服務員設計之失智症照護進階課程，內容涵蓋失智症認識、溝通技巧、行為問題處理等專業知能。"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "job-001",
+      "title": "照顧服務員",
+      "location": "冬山日間照顧中心",
+      "type": "全職",
+      "status": "active",
+      "statusText": "招募中",
+      "postedDate": "2026-01-10",
+      "salary": "月薪 32,000 ~ 38,000",
+      "requirements": [
+        "具照顧服務員結業證書",
+        "具備照顧服務員單一級技術士證照者優先",
+        "具相關工作經驗者優先",
+        "需配合輪班制度"
+      ],
+      "duties": [
+        "協助長者日常生活照顧（如進食、如廁、移位等）",
+        "執行健康促進與休閒活動",
+        "觀察並記錄長者健康狀況",
+        "協助維護環境整潔"
+      ],
+      "benefits": ["勞健保", "三節獎金", "年終獎金", "在職訓練"]
+    },
+    {
+      "id": "job-002",
+      "title": "社會工作員",
+      "location": "本會冬山辦公室",
+      "type": "全職",
+      "status": "active",
+      "statusText": "招募中",
+      "postedDate": "2026-01-05",
+      "salary": "月薪 35,000 ~ 42,000",
+      "requirements": [
+        "社會工作相關科系畢業",
+        "具社會工作師證照者優先",
+        "熟悉長照2.0服務體系",
+        "具個案管理經驗者優先"
+      ],
+      "duties": [
+        "長照服務個案評估與管理",
+        "服務計畫擬定與執行追蹤",
+        "資源連結與轉介服務",
+        "相關行政文書作業"
+      ],
+      "benefits": ["勞健保", "三節獎金", "年終獎金", "專業津貼"]
+    }
+  ],
   "resources": []
 }

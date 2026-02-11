@@ -285,8 +285,8 @@
       <h2 class="cta-title">想加入我們的團隊嗎？</h2>
       <p class="cta-description">歡迎將您的履歷寄至 hr@yilan-ltc.org.tw 或親洽本會洽詢。</p>
       <div class="cta-actions">
-        <a href="mailto:hr@yilan-ltc.org.tw" class="btn btn-white btn-lg"><i class="ph ph-envelope" style="margin-right: 8px;"></i> 投遞履歷</a>
-        <a href="contact.html" class="btn btn-ghost btn-lg">聯絡我們</a>
+        <a href="#" class="btn btn-white btn-lg" onclick="window.open(window.CONFIG.forms.jobApply || 'contact.html', '_blank'); return false;"><i class="ph ph-envelope" style="margin-right: 8px;"></i> 投遞履歷</a>
+        <a href="tel:+88639581020" class="btn btn-ghost btn-lg"><i class="ph ph-phone" style="margin-right: 8px;"></i> 撥打諮詢專線</a>
       </div>
     </div>
   </section>
@@ -340,127 +340,11 @@
     </div>
   </footer>
 
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
   <script src="js/main.js"></script>
   <script>
-    // Sample job data
-    const jobsData = [
-      {
-        id: 'job-001',
-        title: '照顧服務員',
-        location: '冬山日間照顧中心',
-        type: '全職',
-        status: 'active',
-        statusText: '招募中',
-        postedDate: '2026-01-10',
-        salary: '月薪 32,000 ~ 38,000',
-        requirements: [
-          '具照顧服務員結業證書',
-          '具備照顧服務員單一級技術士證照者優先',
-          '具相關工作經驗者優先',
-          '需配合輪班制度'
-        ],
-        duties: [
-          '協助長者日常生活照顧（如進食、如廁、移位等）',
-          '執行健康促進與休閒活動',
-          '觀察並記錄長者健康狀況',
-          '協助維護環境整潔'
-        ],
-        benefits: ['勞健保', '三節獎金', '年終獎金', '在職訓練']
-      },
-      {
-        id: 'job-002',
-        title: '社會工作員',
-        location: '本會冬山辦公室',
-        type: '全職',
-        status: 'active',
-        statusText: '招募中',
-        postedDate: '2026-01-05',
-        salary: '月薪 35,000 ~ 42,000',
-        requirements: [
-          '社會工作相關科系畢業',
-          '具社會工作師證照者優先',
-          '熟悉長照2.0服務體系',
-          '具個案管理經驗者優先'
-        ],
-        duties: [
-          '長照服務個案評估與管理',
-          '服務計畫擬定與執行追蹤',
-          '資源連結與轉介服務',
-          '相關行政文書作業'
-        ],
-        benefits: ['勞健保', '三節獎金', '年終獎金', '專業津貼']
-      }
-    ];
-    
-    function formatDate(dateString) {
-      const date = new Date(dateString);
-      return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
-    }
-    
-    function renderJobs() {
-      const grid = document.getElementById('jobsGrid');
-      
-      if (jobsData.length === 0) {
-        grid.innerHTML = `
-          <div style="text-align: center; padding: var(--spacing-3xl); color: var(--color-gray-500);">
-          <div style="text-align: center; padding: var(--spacing-3xl); color: var(--color-gray-500);">
-            <p style="font-size: 4rem; line-height: 1;"><i class="ph ph-briefcase"></i></p>
-            <p>目前暫無招募職缺</p>
-            <p style="font-size: var(--font-size-sm);">歡迎投遞履歷加入人才庫</p>
-          </div>
-        `;
-        return;
-      }
-      
-      grid.innerHTML = jobsData.map(job => `
-        <article class="job-card reveal">
-          <div class="job-header">
-            <div class="job-title-group">
-              <h3 class="job-title">${job.title}</h3>
-              <div class="job-meta">
-              <div class="job-meta">
-                <span><i class="ph ph-map-pin"></i> ${job.location}</span>
-                <span><i class="ph ph-briefcase"></i> ${job.type}</span>
-                <span><i class="ph ph-calendar-blank"></i> ${formatDate(job.postedDate)} 刊登</span>
-              </div>
-              </div>
-            </div>
-            <span class="job-status ${job.status}">${job.statusText}</span>
-          </div>
-          <div class="job-body">
-            <div class="job-section">
-              <div class="job-section-title"><i class="ph ph-currency-dollar"></i> 薪資待遇</div>
-              <div class="job-section-content">${job.salary}</div>
-            </div>
-            <div class="job-section">
-              <div class="job-section-title"><i class="ph ph-clipboard-text"></i> 工作職責</div>
-              <div class="job-section-content">
-                <ul>
-                  ${job.duties.map(duty => `<li>${duty}</li>`).join('')}
-                </ul>
-              </div>
-            </div>
-            <div class="job-section">
-              <div class="job-section-title"><i class="ph ph-check-circle"></i> 應徵條件</div>
-              <div class="job-section-content">
-                <ul>
-                  ${job.requirements.map(req => `<li>${req}</li>`).join('')}
-                </ul>
-              </div>
-            </div>
-            <div class="job-tags">
-              ${job.benefits.map(b => `<span class="job-tag">${b}</span>`).join('')}
-            </div>
-          </div>
-          <div class="job-footer">
-            <a href="mailto:hr@yilan-ltc.org.tw?subject=應徵${job.title}" class="btn btn-primary">立即應徵</a>
-            <a href="contact.html?subject=job&job=${job.id}" class="btn" style="background: var(--color-gray-100); color: var(--color-gray-700);">詢問詳情</a>
-          </div>
-        </article>
-      `).join('');
-    }
-    
-    document.addEventListener('DOMContentLoaded', renderJobs);
+    // Data is loaded and rendered by js/main.js
   </script>
 </body>
 </html>
