@@ -45,25 +45,28 @@ async function loadSiteData() {
   try {
     // 1. Fetch site data first (base)
     const response = await fetch("data/site-data.json");
-    window.siteData = await response.json();
+    const data = await response.json();
+    siteData = data;            // Update local module variable
+    window.siteData = data;     // Also expose globally
 
     // 2. Try to fetch dynamic data from Google Sheets (if configured)
     if (window.API && window.CONFIG && window.CONFIG.useRemoteData) {
       const dynamicNews = await window.API.fetchData('news');
-      if (dynamicNews && dynamicNews.length > 0) window.siteData.news = dynamicNews;
+      if (dynamicNews && dynamicNews.length > 0) siteData.news = dynamicNews;
 
       const dynamicJobs = await window.API.fetchData('jobs');
-      if (dynamicJobs && dynamicJobs.length > 0) window.siteData.jobs = dynamicJobs;
+      if (dynamicJobs && dynamicJobs.length > 0) siteData.jobs = dynamicJobs;
       
       const dynamicCourses = await window.API.fetchData('courses');
-      if (dynamicCourses && dynamicCourses.length > 0) window.siteData.courses = dynamicCourses;
+      if (dynamicCourses && dynamicCourses.length > 0) siteData.courses = dynamicCourses;
     }
 
     renderAll();
   } catch (error) {
     console.error("Error loading site data:", error);
     // Render with fallback data if JSON fetch fails (critical error)
-    window.siteData = getFallbackData();
+    siteData = getFallbackData();
+    window.siteData = siteData;
     renderAll();
   }
 }
@@ -619,22 +622,39 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 function renderServicesPage() {
   if (!siteData) return;
   
-  // Elder Care Locations
-  const elderCareGrid = document.getElementById('elderCareLocations');
-  if (elderCareGrid) {
-    const locations = siteData.serviceLocations.filter(loc => loc.locationType === '長照機構');
-    elderCareGrid.innerHTML = locations.map(loc => createLocationCard(loc)).join('');
-  }
-  
-  // Dementia Locations
-  const dementiaGrid = document.getElementById('dementiaLocations');
-  if (dementiaGrid) {
-    const locations = siteData.serviceLocations.filter(loc => loc.locationType === '樂智據點');
-    dementiaGrid.innerHTML = locations.map(loc => createLocationCard(loc, 'dementia')).join('');
-  }
-  
-  if (elderCareGrid || dementiaGrid) {
-    initScrollReveal();
+  try {
+    // Elder Care Locations
+    const elderCareGrid = document.getElementById('elderCareLocations');
+    if (elderCareGrid) {
+      if (!siteData.serviceLocations) {
+        elderCareGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--color-gray-500);">資料載入中…</p>';
+      } else {
+        const locations = siteData.serviceLocations.filter(loc => loc.locationType === '長照機構' || loc.serviceTypeId === 'elder-care');
+        if (locations.length > 0) {
+          elderCareGrid.innerHTML = locations.map(loc => createLocationCard(loc)).join('');
+        } else {
+          elderCareGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--color-gray-500);">查無長照機構資料</p>';
+        }
+      }
+    }
+    
+    // Dementia Locations
+    const dementiaGrid = document.getElementById('dementiaLocations');
+    if (dementiaGrid) {
+      const locations = (siteData.serviceLocations || []).filter(loc => loc.locationType === '樂智據點' || loc.serviceTypeId === 'dementia-center');
+      if (locations.length > 0) {
+        dementiaGrid.innerHTML = locations.map(loc => createLocationCard(loc, 'dementia')).join('');
+      } else {
+        dementiaGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--color-gray-500);">查無樂智據點資料</p>';
+      }
+    }
+    
+    // Re-init scroll reveal for new cards
+    if (elderCareGrid || dementiaGrid) {
+      initScrollReveal();
+    }
+  } catch (error) {
+    console.error("Error in renderServicesPage:", error);
   }
 }
 
