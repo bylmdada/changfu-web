@@ -35,6 +35,12 @@
   --color-gray-900: #111827;
   --color-black:    #000000;
 
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error:   #ef4444;
+  --color-info:    #3b82f6;
+
   /* Typography */
   --font-family-base: 'Inter', 'Noto Sans TC', sans-serif;
   --font-family-heading: 'Inter', 'Noto Sans TC', sans-serif;
