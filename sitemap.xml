@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://bylmdada.github.io/changfu-web/</loc>
+    <loc>https://www.changfu.me/</loc>
     <lastmod>2026-02-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://bylmdada.github.io/changfu-web/index.html</loc>
+    <loc>https://www.changfu.me/index.html</loc>
     <lastmod>2026-02-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bylmdada.github.io/changfu-web/about.html</loc>
+    <loc>https://www.changfu.me/about.html</loc>
     <lastmod>2026-02-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bylmdada.github.io/changfu-web/services.html</loc>
+    <loc>https://www.changfu.me/services.html</loc>
     <lastmod>2026-02-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bylmdada.github.io/changfu-web/news.html</loc>
+    <loc>https://www.changfu.me/news.html</loc>
     <lastmod>2026-02-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bylmdada.github.io/changfu-web/courses.html</loc>
+    <loc>https://www.changfu.me/courses.html</loc>
     <lastmod>2026-02-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://bylmdada.github.io/changfu-web/jobs.html</loc>
+    <loc>https://www.changfu.me/jobs.html</loc>
     <lastmod>2026-02-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://bylmdada.github.io/changfu-web/contact.html</loc>
+    <loc>https://www.changfu.me/contact.html</loc>
     <lastmod>2026-02-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
