@@ -288,11 +288,7 @@ p {
   line-height: 1.2;
 }
 
-.logo-subtitle {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
+
 
 .nav-desktop {
   display: none;
