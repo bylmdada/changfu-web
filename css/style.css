@@ -282,7 +282,7 @@ p {
 }
 
 .logo-title {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 800;
   color: var(--text-primary);
   line-height: 1.2;

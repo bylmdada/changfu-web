@@ -76,7 +76,7 @@ function getFallbackData() {
   return {
     organization: {
       name: "社團法人宜蘭縣長期照護及社會福祉推廣協會",
-      shortName: "宜蘭長福會",
+      shortName: "社團法人宜蘭縣長期照護及社會福祉推廣協會",
       tagline: "專業照護、在地深耕、溫暖相伴",
       stats: {
         served: 5000,
