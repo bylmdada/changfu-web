@@ -76,15 +76,82 @@
     <div class="container">
       <div class="contact-grid">
         <!-- Contact Form -->
-        <div class="reveal text-center">
+        <div class="reveal">
           <h2 style="margin-bottom: var(--spacing-lg);">線上諮詢</h2>
-          <div style="max-width: 600px; margin: 0 auto; padding: var(--spacing-xl); background: var(--color-gray-50); border-radius: var(--radius-lg);">
-            <p style="margin-bottom: var(--spacing-lg); color: var(--color-gray-600);">
-              為了提供更完善的服務，我們使用 Google 表單來收集您的諮詢內容。請點擊下方按鈕填寫表單，我們收到後將盡快與您聯繫。
-            </p>
-            <a href="#" onclick="window.open(window.CONFIG.forms.contact || 'https://forms.google.com', '_blank'); return false;" class="btn btn-primary btn-lg">
-              <i class="ph ph-note-pencil" style="margin-right: 8px;"></i> 填寫線上諮詢表單
-            </a>
+          <div style="background: var(--color-white); padding: var(--spacing-xl); border-radius: var(--radius-lg); border: 1px solid var(--color-gray-200); box-shadow: var(--shadow-sm);">
+
+            <!-- Success Message -->
+            <div id="formSuccess" style="display:none; padding: var(--spacing-lg); background: #f0fdf4; border: 1px solid #86efac; border-radius: var(--radius-md); margin-bottom: var(--spacing-lg);">
+              <div style="display:flex; align-items:center; gap: var(--spacing-sm); color: #16a34a;">
+                <i class="ph ph-check-circle" style="font-size: 1.5rem;"></i>
+                <div>
+                  <strong>表單送出成功！</strong>
+                  <p style="margin:0; font-size: 0.875rem;">感謝您的諮詢，我們將於 1-2 個工作天內與您聯繫。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="formError" style="display:none; padding: var(--spacing-lg); background: #fef2f2; border: 1px solid #fca5a5; border-radius: var(--radius-md); margin-bottom: var(--spacing-lg);">
+              <div style="display:flex; align-items:center; gap: var(--spacing-sm); color: #dc2626;">
+                <i class="ph ph-warning-circle" style="font-size: 1.5rem;"></i>
+                <div>
+                  <strong>送出失敗</strong>
+                  <p style="margin:0; font-size: 0.875rem;">請稍後再試，或直接致電 +886 3 958 1020 與我們聯繫。</p>
+                </div>
+              </div>
+            </div>
+
+            <form id="contactForm" novalidate>
+              <!-- Web3Forms Access Key (請至 https://web3forms.com 取得免費金鑰) -->
+              <input type="hidden" name="access_key" value="b47a75cd-7620-4207-a21b-bb25f142085e">
+              <input type="hidden" name="subject" value="長福協會官網線上諮詢">
+              <input type="hidden" name="from_name" value="長福協會官網">
+              <input type="checkbox" name="botcheck" style="display:none;">
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
+                <div class="form-group">
+                  <label class="form-label" for="name">姓名 <span style="color:#dc2626;">*</span></label>
+                  <input type="text" id="name" name="name" class="form-input" placeholder="請輸入您的姓名" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="phone">聯絡電話 <span style="color:#dc2626;">*</span></label>
+                  <input type="tel" id="phone" name="phone" class="form-input" placeholder="例：0912-345-678" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="email">電子郵件</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="example@mail.com">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="topic">諮詢類別 <span style="color:#dc2626;">*</span></label>
+                <select id="topic" name="topic" class="form-select" required>
+                  <option value="" disabled selected>請選擇諮詢類別</option>
+                  <option value="長者照顧服務">長者照顧服務</option>
+                  <option value="失智社區服務">失智社區服務據點</option>
+                  <option value="輔具資源服務">輔具資源服務</option>
+                  <option value="課程訓練">課程訓練報名</option>
+                  <option value="招募徵才">招募徵才</option>
+                  <option value="其他">其他</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="message">諮詢內容 <span style="color:#dc2626;">*</span></label>
+                <textarea id="message" name="message" class="form-textarea" placeholder="請描述您的問題或需求，我們將盡快回覆..." style="min-height: 140px;" required></textarea>
+              </div>
+
+              <button type="submit" id="submitBtn" class="btn btn-primary btn-lg" style="width: 100%;">
+                <i class="ph ph-paper-plane-tilt" style="margin-right: 8px;"></i>
+                <span id="submitText">送出諮詢</span>
+              </button>
+
+              <p style="margin-top: var(--spacing-md); font-size: 0.75rem; color: var(--color-gray-500); text-align: center;">
+                送出表單即代表您同意我們依據相關法規處理您的個人資料
+              </p>
+            </form>
           </div>
         </div>
         
@@ -221,7 +288,54 @@
   <script src="js/api.js"></script>
   <script src="js/main.js"></script>
   <script>
-    // Contact form handled by main.js
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const submitText = document.getElementById('submitText');
+    const successMsg = document.getElementById('formSuccess');
+    const errorMsg = document.getElementById('formError');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      // Basic validation
+      const required = form.querySelectorAll('[required]');
+      let valid = true;
+      required.forEach(el => {
+        el.style.borderColor = '';
+        if (!el.value.trim()) {
+          el.style.borderColor = '#dc2626';
+          valid = false;
+        }
+      });
+      if (!valid) return;
+
+      submitBtn.disabled = true;
+      submitText.textContent = '送出中...';
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+
+      try {
+        const data = new FormData(form);
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: data
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          form.reset();
+          successMsg.style.display = 'block';
+          successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+          errorMsg.style.display = 'block';
+        }
+      } catch {
+        errorMsg.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitText.textContent = '送出諮詢';
+      }
+    });
   </script>
 </body>
 </html>
