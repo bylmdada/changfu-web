@@ -74,8 +74,11 @@
     </script>
   </head>
   <body>
+    <!-- Skip Navigation (WCAG 2.4.1) -->
+    <a href="#main-content" class="skip-link">跳至主要內容</a>
+
     <!-- Header -->
-    <header class="header" id="header">
+    <header class="header" id="header" role="banner">
       <div class="container">
         <div class="header-inner">
           <!-- Logo -->
@@ -87,10 +90,10 @@
           </a>
 
           <!-- Desktop Navigation -->
-          <nav class="nav-desktop">
+          <nav class="nav-desktop" aria-label="主要導覽">
             <ul class="nav-list">
               <li class="nav-item">
-                <a href="./" class="nav-link">首頁</a>
+                <a href="./" class="nav-link" aria-current="page">首頁</a>
               </li>
               <li class="nav-item">
                 <a href="about.html" class="nav-link">關於我們</a>
@@ -134,7 +137,7 @@
           </nav>
 
           <!-- Mobile Menu Toggle -->
-          <button class="menu-toggle" id="menuToggle" aria-label="開啟選單">
+          <button class="menu-toggle" id="menuToggle" aria-label="開啟選單" aria-expanded="false" aria-controls="navMobile">
             <span></span>
             <span></span>
             <span></span>
@@ -143,7 +146,7 @@
       </div>
 
       <!-- Mobile Navigation -->
-      <nav class="nav-mobile" id="navMobile">
+      <nav class="nav-mobile" id="navMobile" aria-label="行動版導覽">
         <ul class="nav-list">
           <li><a href="./" class="nav-link">首頁</a></li>
           <li><a href="about.html" class="nav-link">關於我們</a></li>
@@ -156,13 +159,16 @@
       </nav>
     </header>
 
+    <!-- Main Content -->
+    <main id="main-content">
+
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" aria-labelledby="hero-heading">
       <div class="container">
         <div class="hero-inner">
           <div class="hero-content">
             <span class="hero-badge">社團法人 ・ 非營利組織</span>
-            <h1 class="hero-title">
+            <h1 class="hero-title" id="hero-heading">
               <span>專業照護</span>、在地深耕<br />
               溫暖相伴
             </h1>
@@ -286,15 +292,17 @@
         </p>
         <div class="cta-actions">
           <a href="contact.html" class="btn btn-white btn-lg">立即諮詢</a>
-          <a href="tel:+88639581020" class="btn btn-ghost btn-lg"
-            ><i class="ph ph-phone" style="margin-right: 8px;"></i> 撥打服務專線</a
+          <a href="tel:+88639581020" class="btn btn-ghost btn-lg" aria-label="撥打服務專線 +886 3 958 1020"
+            ><i class="ph ph-phone" aria-hidden="true" style="margin-right: 8px;"></i> 撥打服務專線</a
           >
         </div>
       </div>
     </section>
 
+    </main><!-- end #main-content -->
+
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
       <div class="container">
         <div class="footer-grid">
           <!-- Brand -->
