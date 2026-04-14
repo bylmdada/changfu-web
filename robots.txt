@@ -2,3 +2,8 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.changfu.me/sitemap.xml
+
+# LLM Context Files
+# See https://llmstxt.org/ for specification
+Allow: /llms.txt
+Allow: /llms-full.txt
