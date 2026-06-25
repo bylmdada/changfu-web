@@ -27,6 +27,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 初始化靜態頁面功能
   initContactForm();
   initHeroStats();
+
+  // 若網址帶消息 hash（如 news.html#news-001），直接開啟該則詳情
+  if (location.hash.length > 1) openNewsDetail(location.hash.slice(1));
 });
 
 // ============================================
@@ -523,7 +526,7 @@ function renderNews() {
       </div>
       <h3 class="news-title" style="margin-top: var(--spacing-xs);">${item.title}</h3>
       <p class="news-summary">${item.summary}</p>
-      <a href="news.html#${item.id}" class="card-link" aria-label="閱讀更多關於${item.title}">
+      <a href="news.html#${item.id}" class="card-link" aria-label="閱讀更多關於${item.title}" onclick="openNewsDetail('${item.id}'); return false;">
         閱讀更多 →
       </a>
     </div>
@@ -904,7 +907,7 @@ function renderNewsPage(filter = 'all') {
         </div>
         <h3 class="news-item-title">${news.title}</h3>
         <p class="news-item-excerpt">${news.summary || news.excerpt}</p>
-        <a href="news.html#${news.id}" class="news-item-link" onclick="alert('詳細內容頁面尚未實作，敬請期待！'); return false;">閱讀更多 →</a>
+        <a href="news.html#${news.id}" class="news-item-link" onclick="openNewsDetail('${news.id}'); return false;">閱讀更多 →</a>
       </div>
     </article>
   `}).join('');
@@ -917,6 +920,75 @@ function renderNewsPage(filter = 'all') {
   }
 }
 
+// ============================================
+// 消息詳情 Modal
+// ============================================
+function ensureNewsModal() {
+  let modal = document.getElementById("newsModal");
+  if (modal) return modal;
+
+  modal = document.createElement("div");
+  modal.id = "newsModal";
+  modal.className = "news-modal";
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-labelledby", "newsModalTitle");
+  modal.setAttribute("aria-hidden", "true");
+  modal.innerHTML = `
+    <div class="news-modal-overlay" data-close></div>
+    <div class="news-modal-dialog" role="document">
+      <button class="news-modal-close" type="button" aria-label="關閉視窗" data-close>&times;</button>
+      <div class="news-modal-body"></div>
+    </div>`;
+  document.body.appendChild(modal);
+
+  // 點遮罩或關閉鈕都關閉
+  modal.addEventListener("click", (e) => {
+    if (e.target.hasAttribute("data-close")) closeNewsDetail();
+  });
+  // ESC 關閉
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("open")) closeNewsDetail();
+  });
+  return modal;
+}
+
+let newsModalLastFocus = null;
+function openNewsDetail(id) {
+  const news = (window.siteData && window.siteData.news) || [];
+  const item = news.find((n) => n.id === id);
+  if (!item) return; // 找不到就不開（例如 hash 不是消息 id）
+
+  const modal = ensureNewsModal();
+  const cover = item.coverImage
+    ? `<img class="news-modal-cover" src="${item.coverImage}" alt="${item.title}">`
+    : "";
+  modal.querySelector(".news-modal-body").innerHTML = `
+    ${cover}
+    <div class="news-modal-meta">
+      <span class="news-modal-category">${item.category || ""}</span>
+      <span class="news-modal-date">${formatDate(item.publishDate || item.date)}</span>
+    </div>
+    <h2 class="news-modal-title" id="newsModalTitle">${item.title}</h2>
+    <div class="news-modal-content">${item.content || `<p>${item.summary || ""}</p>`}</div>`;
+
+  newsModalLastFocus = document.activeElement;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+  modal.querySelector(".news-modal-close").focus();
+}
+
+function closeNewsDetail() {
+  const modal = document.getElementById("newsModal");
+  if (!modal) return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+  if (newsModalLastFocus && typeof newsModalLastFocus.focus === "function") {
+    newsModalLastFocus.focus();
+  }
+}
 
 // ============================================
 // Render All Function
@@ -964,5 +1036,7 @@ window.SiteApp = {
   initBackToTop,
   initHeroStats,
   initMobileNav,
+  openNewsDetail,
+  closeNewsDetail,
   renderAll
 };
