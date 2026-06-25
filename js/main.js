@@ -553,12 +553,6 @@ function formatDate(dateString) {
   return `${year}/${month}/${day}`;
 }
 
-// 截斷文字
-function truncate(text, maxLength = 100) {
-  if (!text || text.length <= maxLength) return text;
-  return text.slice(0, maxLength) + "...";
-}
-
 // ============================================
 // 表單處理
 // ============================================
@@ -1030,7 +1024,6 @@ window.SiteApp = {
   renderJobs,
   renderCourses,
   formatDate,
-  truncate,
   initContactForm,
   initA11yWidget,
   initBackToTop,
