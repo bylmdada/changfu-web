@@ -20,11 +20,11 @@ const CONFIG = {
         serviceLocations: ''
     },
 
-    // Form Links
+    // Form Links（留空則按鈕 fallback 到站內 contact.html；填了外部表單網址才會改連外部）
     forms: {
-        contact: 'https://docs.google.com/forms/d/e/.../viewform',
-        jobApply: 'https://docs.google.com/forms/d/e/.../viewform',
-        courseRegister: 'https://docs.google.com/forms/d/e/.../viewform'
+        contact: '',
+        jobApply: '',
+        courseRegister: ''
     }
 };
 
