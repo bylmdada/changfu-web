@@ -8,8 +8,8 @@
  */
 
 const CONFIG = {
-    // Enable/Disable remote fetching
-    useRemoteData: true,
+    // Enable/Disable remote fetching（endpoints 都填好再設 true，否則徒增請求與 console 警告）
+    useRemoteData: false,
     
     // Google Sheets "Publish to Web" CSV Links
     // Replace these with your actual published CSV links

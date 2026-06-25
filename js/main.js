@@ -13,28 +13,19 @@ const DATA_URL = "data/site-data.json";
 // 初始化
 // ============================================
 document.addEventListener("DOMContentLoaded", async () => {
-  // 初始化新功能
+  // 初始化功能
+  initHeader();
   initA11yWidget();
   initBackToTop();
   initMobileNav();
-  
-  // 載入資料並渲染
+  initLocationFilters();
+
+  // 載入資料並渲染（loadSiteData 內部會呼叫 renderAll 渲染所有區塊，
+  // 各 render 結尾自帶 initScrollReveal，故此處不再重複呼叫）
   await loadSiteData();
-  
-  // 自動渲染頁面內容 (如果存在對應容器)
-  // 自動渲染頁面內容 (如果存在對應容器)
-  renderServices();
-  renderNews();
-  renderLocations();
-  renderServicesPage();
-  renderJobs();
-  renderCourses();
-  renderNewsPage();
-  
+
   // 初始化靜態頁面功能
   initContactForm();
-  initScrollReveal();
-  
   initHeroStats();
 });
 
@@ -188,24 +179,29 @@ function initMobileNav() {
 // ============================================
 // 滾動揭示動畫
 // ============================================
+// ponytail: 單一共用 observer，避免每次 render 都 new 一個造成疊加洩漏
+let revealObserver = null;
 function initScrollReveal() {
-  const revealElements = document.querySelectorAll(".reveal");
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("active");
-        }
-      });
-    },
-    {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
-    },
-  );
-
-  revealElements.forEach((el) => observer.observe(el));
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            revealObserver.unobserve(entry.target); // 揭示後即停止觀察
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      },
+    );
+  }
+  // 只觀察尚未揭示的元素
+  document
+    .querySelectorAll(".reveal:not(.active)")
+    .forEach((el) => revealObserver.observe(el));
 }
 
 // ============================================
@@ -419,10 +415,14 @@ function renderLocations(filter = "all") {
         icon = "ph-wheelchair";
       }
 
+      const imageInner = location.images && location.images.length > 0
+        ? `<img src="${location.images[0]}" alt="${location.name}" loading="lazy">`
+        : `<div class="location-image-fallback"><i class="ph ${icon}"></i></div>`;
+
       return `
       <div class="location-card reveal ${typeClass}">
         <div class="location-image">
-          <img src="${location.images && location.images.length > 0 ? location.images[0] : 'assets/images/placeholder.jpg'}" alt="${location.name}" loading="lazy">
+          ${imageInner}
           <div class="location-tag">${location.locationType}</div>
         </div>
         <div class="location-content">
@@ -560,34 +560,54 @@ function initContactForm() {
   const form = document.getElementById("contactForm");
   if (!form) return;
 
+  const successBox = document.getElementById("formSuccess");
+  const errorBox = document.getElementById("formError");
+  const submitBtn = document.getElementById("submitBtn");
+  const submitText = document.getElementById("submitText");
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
+    // 表單有 novalidate，手動觸發必填驗證
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
-    // 顯示載入狀態
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = "送出中...";
-    submitBtn.disabled = true;
+    if (successBox) successBox.style.display = "none";
+    if (errorBox) errorBox.style.display = "none";
+
+    // 載入狀態
+    const originalText = submitText ? submitText.textContent : "";
+    if (submitText) submitText.textContent = "送出中...";
+    if (submitBtn) submitBtn.disabled = true;
 
     try {
-      // 這裡可以串接實際的表單提交 API
-      console.log("Form submitted:", data);
+      // 送至 Web3Forms（access_key 已在表單 hidden 欄位中）
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: new FormData(form),
+      });
+      const result = await response.json();
 
-      // 模擬延遲
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // 成功訊息
-      alert("感謝您的來信！我們將盡快回覆您。");
-      form.reset();
+      if (result.success) {
+        if (successBox) {
+          successBox.style.display = "block";
+          successBox.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        form.reset();
+      } else {
+        throw new Error(result.message || "Web3Forms 回傳失敗");
+      }
     } catch (error) {
       console.error("Form submission error:", error);
-      alert("送出失敗，請稍後再試。");
+      if (errorBox) {
+        errorBox.style.display = "block";
+        errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     } finally {
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
+      if (submitText) submitText.textContent = originalText;
+      if (submitBtn) submitBtn.disabled = false;
     }
   });
 }
