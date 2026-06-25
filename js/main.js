@@ -291,10 +291,13 @@ function initHeroStats() {
     // 模擬數據 (如果 siteData 中沒有)
     const statsData = siteData?.organization?.stats || {
         served: 5000,
-        years: 10,
         locations: 8
     };
-    
+
+    // 深耕年數依成立年自動計算，避免寫死過時
+    const foundingYear = parseInt(siteData?.organization?.establishedDate) || 2020;
+    const years = Math.max(1, new Date().getFullYear() - foundingYear);
+
     // 如果已有內容則不重複渲染 (支援靜態 HTML)
     if (statsContainer.innerHTML.trim() === '') {
         statsContainer.innerHTML = `
@@ -303,7 +306,7 @@ function initHeroStats() {
                 <span class="stat-label">服務人次</span>
             </div>
             <div class="stat-item reveal">
-                <span class="stat-number" data-target="${statsData.years}">0</span>
+                <span class="stat-number" data-target="${years}">0</span>
                 <span class="stat-label">深耕年數</span>
             </div>
             <div class="stat-item reveal">
