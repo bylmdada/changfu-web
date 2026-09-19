@@ -89,36 +89,37 @@
 
   <!-- FAQ Schema for AI Search -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "宜蘭日間照顧中心提供哪些服務？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "長福會附設的日間照顧中心提供日間照顧服務、生活照顧、健康促進活動、休閒與社會參與、餐食供應、沐浴服務及交通接送等完善支援，讓長者在熟悉的社區環境中獲得專業照顧。服務據點包括冬山及蘇澳。"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "失智樂智據點的服務內容有哪些？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "樂智據點提供認知功能促進活動、預防及延緩失能課程、共餐與社會參與活動、照顧者支持團體及照顧者訓練課程。服務對象為輕度失智長者及其家庭照顧者，據點分布於宜蘭縣礁溪、冬山、羅東及三星。"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "宜蘭溪北輔具資源中心有哪些服務項目？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "溪北輔具資源中心提供九大服務項目：輔具諮詢、輔具需求評估、輔具回收再利用、輔具借用、輔具適配與調整、使用追蹤與訪視、輔具維修保養、輔具使用訓練及居家無障礙環境評估。服務對象包括身心障礙者、失能者及一般有輔具需求之民眾。地址：宜蘭縣宜蘭市聖後街141號，電話：03-958-1020。"
-        }
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "宜蘭日間照顧中心提供哪些服務？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "長福會附設的日間照顧中心提供日間照顧服務、生活照顧、健康促進活動、休閒與社會參與、餐食供應、沐浴服務及交通接送等完善支援，讓長者在熟悉的社區環境中獲得專業照顧。服務據點包括冬山及蘇澳。"
       }
-    ]
-  }
+    },
+    {
+      "@type": "Question",
+      "name": "失智樂智據點的服務內容有哪些？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "樂智據點提供認知功能促進活動、預防及延緩失能課程、共餐與社會參與活動、照顧者支持團體及照顧者訓練課程。服務對象為輕度失智長者及其家庭照顧者，據點分布於宜蘭縣礁溪、冬山、羅東及三星。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "宜蘭溪北輔具資源中心有哪些服務項目？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "宜蘭縣溪北輔具資源中心提供輔具諮詢、評估、借用、維修及適配等服務。中心位於宜蘭縣宜蘭市聖後街141號，電話 03-9320920；服務時間為週一至週五 08:00-12:00、13:00-17:00，週三夜間 17:30-19:30 採預約制。辦理方式與最新公告請見中心官網。"
+      }
+    }
+  ],
+  "@id": "https://www.changfu.me/services.html#faq"
+}
   </script>
 </head>
 <body>
@@ -164,6 +165,7 @@
     </nav>
   </header>
 
+  <main id="main-content">
   <!-- Page Header -->
   <section class="hero hero-bg-image" style="padding-bottom: var(--spacing-2xl);">
     <div class="container">
@@ -172,7 +174,7 @@
           <a href="./" style="color: var(--color-gray-500);">首頁</a> / 核心業務
         </nav>
         <h1 class="hero-title" style="font-size: var(--font-size-4xl);">核心業務</h1>
-        <p class="hero-description">我們提供多元的長期照顧服務，滿足長者與家庭的不同需求</p>
+        <p class="hero-description">長福會在宜蘭提供長者日間照顧、失智社區服務據點及輔具資源服務。以下列出各項服務內容、對象與據點；服務安排請先電話洽詢。</p>
       </div>
     </div>
   </section>
@@ -236,7 +238,51 @@
       <div style="margin-top: var(--spacing-2xl);">
         <h3 style="margin-bottom: var(--spacing-lg);">服務據點</h3>
         <div class="locations-grid" id="elderCareLocations">
-          <!-- Will be populated by JS -->
+<!-- search:elderCareLocations -->
+<div class="location-card reveal" style="overflow: hidden; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+      <div class="location-image-wrapper" style="height: 200px; overflow: hidden;"><img src="assets/images/locations/babao.png" alt="八寶社區長照機構" style="width: 100%; height: 100%; object-fit: cover;"></div>
+      <div class="location-body" style="padding: 1.5rem;">
+        <span class="location-type " style="display: inline-block; padding: 0.25rem 0.75rem; background: var(--color-primary-bg); color: var(--color-primary); border-radius: var(--radius-full); font-size: 0.875rem; margin-bottom: 0.5rem;">長照機構</span>
+        <h3 class="location-title" style="margin-bottom: 1rem;">八寶社區長照機構</h3>
+        <div class="location-info" style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-map-pin"></i></span>
+            <span>台灣宜蘭縣冬山鄉八寶路 25 號</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-phone"></i></span>
+            <span>+886 3 958 1020</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-clock"></i></span>
+            <span>週一至週五 08:00-17:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="location-card reveal" style="overflow: hidden; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+      <div class="location-image-wrapper" style="height: 200px; overflow: hidden;"><img src="assets/images/locations/suxi.png" alt="蘇西社區長照機構" style="width: 100%; height: 100%; object-fit: cover;"></div>
+      <div class="location-body" style="padding: 1.5rem;">
+        <span class="location-type " style="display: inline-block; padding: 0.25rem 0.75rem; background: var(--color-primary-bg); color: var(--color-primary); border-radius: var(--radius-full); font-size: 0.875rem; margin-bottom: 0.5rem;">長照機構</span>
+        <h3 class="location-title" style="margin-bottom: 1rem;">蘇西社區長照機構</h3>
+        <div class="location-info" style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-map-pin"></i></span>
+            <span>宜蘭縣蘇澳鎮志成路 62 號 2F</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-phone"></i></span>
+            <span>+886 3 958 1020</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-clock"></i></span>
+            <span>週一至週五 08:00-17:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- /search:elderCareLocations -->
         </div>
       </div>
     </div>
@@ -293,7 +339,95 @@
       <div style="margin-top: var(--spacing-2xl);">
         <h3 style="margin-bottom: var(--spacing-lg);">樂智據點分布</h3>
         <div class="locations-grid" id="dementiaLocations">
-          <!-- Will be populated by JS -->
+<!-- search:dementiaLocations -->
+<div class="location-card reveal" style="overflow: hidden; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+      <div class="location-image-wrapper" style="height: 200px; overflow: hidden;"><img src="assets/images/locations/jiaoxi.png" alt="礁溪樂智據點" style="width: 100%; height: 100%; object-fit: cover;"></div>
+      <div class="location-body" style="padding: 1.5rem;">
+        <span class="location-type dementia" style="display: inline-block; padding: 0.25rem 0.75rem; background: var(--color-primary-bg); color: var(--color-primary); border-radius: var(--radius-full); font-size: 0.875rem; margin-bottom: 0.5rem;">樂智據點</span>
+        <h3 class="location-title" style="margin-bottom: 1rem;">礁溪樂智據點</h3>
+        <div class="location-info" style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-map-pin"></i></span>
+            <span>宜蘭縣礁溪鄉礁溪路三段 19 號</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-phone"></i></span>
+            <span>0958-595903</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-clock"></i></span>
+            <span>請洽詢</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="location-card reveal" style="overflow: hidden; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+      <div class="location-image-wrapper" style="height: 200px; overflow: hidden;"><img src="assets/images/locations/dongshan.png" alt="冬山樂智據點" style="width: 100%; height: 100%; object-fit: cover;"></div>
+      <div class="location-body" style="padding: 1.5rem;">
+        <span class="location-type dementia" style="display: inline-block; padding: 0.25rem 0.75rem; background: var(--color-primary-bg); color: var(--color-primary); border-radius: var(--radius-full); font-size: 0.875rem; margin-bottom: 0.5rem;">樂智據點</span>
+        <h3 class="location-title" style="margin-bottom: 1rem;">冬山樂智據點</h3>
+        <div class="location-info" style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-map-pin"></i></span>
+            <span>宜蘭縣冬山鄉照安路 56 號</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-phone"></i></span>
+            <span>0958-595903</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-clock"></i></span>
+            <span>請洽詢</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="location-card reveal" style="overflow: hidden; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+      <div class="location-image-wrapper" style="height: 200px; overflow: hidden;"><img src="assets/images/locations/luodong.png" alt="羅東樂智據點" style="width: 100%; height: 100%; object-fit: cover;"></div>
+      <div class="location-body" style="padding: 1.5rem;">
+        <span class="location-type dementia" style="display: inline-block; padding: 0.25rem 0.75rem; background: var(--color-primary-bg); color: var(--color-primary); border-radius: var(--radius-full); font-size: 0.875rem; margin-bottom: 0.5rem;">樂智據點</span>
+        <h3 class="location-title" style="margin-bottom: 1rem;">羅東樂智據點</h3>
+        <div class="location-info" style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-map-pin"></i></span>
+            <span>宜蘭縣羅東鎮光榮路 83 號</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-phone"></i></span>
+            <span>03-9550044</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-clock"></i></span>
+            <span>請洽詢</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="location-card reveal" style="overflow: hidden; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+      <div class="location-image-wrapper" style="height: 200px; overflow: hidden;"><img src="assets/images/locations/sanxing.png" alt="三星樂智據點" style="width: 100%; height: 100%; object-fit: cover;"></div>
+      <div class="location-body" style="padding: 1.5rem;">
+        <span class="location-type dementia" style="display: inline-block; padding: 0.25rem 0.75rem; background: var(--color-primary-bg); color: var(--color-primary); border-radius: var(--radius-full); font-size: 0.875rem; margin-bottom: 0.5rem;">樂智據點</span>
+        <h3 class="location-title" style="margin-bottom: 1rem;">三星樂智據點</h3>
+        <div class="location-info" style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-map-pin"></i></span>
+            <span>宜蘭縣三星鄉三星路一段 548 號</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-phone"></i></span>
+            <span>0958-595903</span>
+          </div>
+          <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="location-info-icon"><i class="ph ph-clock"></i></span>
+            <span>請洽詢</span>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- /search:dementiaLocations -->
         </div>
       </div>
     </div>
@@ -313,7 +447,7 @@
           </div>
           
           <p class="lead">
-            本會自民國 110 年 4 月 1 日起承接宜蘭縣長期照護管理所委託辦理「宜蘭縣溪北輔具資源中心」，提供單一窗口之輔具服務。中心服務項目涵蓋輔具諮詢、評估、回收、借用、適配、追蹤、維修、訓練及居家無障礙環境評估等，協助民眾獲得適當輔具，提升生活自立能力、促進健康樂活及增進社會參與。
+            本會自民國 110 年 4 月 1 日起承接宜蘭縣長期照護管理所委託辦理「宜蘭縣溪北輔具資源中心」，提供單一窗口之輔具服務。中心服務項目涵蓋輔具諮詢、評估、回收、借用、適配、追蹤、維修、訓練及居家無障礙環境評估等，協助民眾獲得適當輔具，提升生活自立能力、促進健康樂活及增進社會參與。服務與辦理方式可查閱<a href="https://yilanatrc.com.tw/">宜蘭縣溪北輔具資源中心官網</a>。
           </p>
           
           <h4 style="margin-top: var(--spacing-xl); margin-bottom: var(--spacing-md);">服務項目</h4>
@@ -380,11 +514,11 @@
               </div>
               <div style="display: flex; gap: var(--spacing-sm);">
                 <span class="location-info-icon"><i class="ph ph-phone"></i></span>
-                <span>+886 3 958 1020</span>
+                <a href="tel:039320920">03-9320920</a>
               </div>
               <div style="display: flex; gap: var(--spacing-sm);">
                 <span class="location-info-icon"><i class="ph ph-clock"></i></span>
-                <span>週一至週五 08:30-17:30</span>
+                <span>週一至週五 08:00-12:00、13:00-17:00；週三夜間 17:30-19:30（預約制）</span>
               </div>
               <div style="display: flex; gap: var(--spacing-sm);">
                 <span class="location-info-icon"><i class="ph ph-globe"></i></span>
@@ -400,6 +534,13 @@
     </div>
   </section>
 
+<!-- search:faq -->
+<section class="section" id="faq" aria-labelledby="faq-heading"><div class="container faq-list"><h2 id="faq-heading">常見問題與解答</h2>
+<article class="faq-item" id="faq-1"><h3>宜蘭日間照顧中心提供哪些服務？</h3><p>長福會附設的日間照顧中心提供日間照顧服務、生活照顧、健康促進活動、休閒與社會參與、餐食供應、沐浴服務及交通接送等完善支援，讓長者在熟悉的社區環境中獲得專業照顧。服務據點包括冬山及蘇澳。 資料來源：<a href="services.html">長福會服務說明</a>。</p></article>
+<article class="faq-item" id="faq-2"><h3>失智樂智據點的服務內容有哪些？</h3><p>樂智據點提供認知功能促進活動、預防及延緩失能課程、共餐與社會參與活動、照顧者支持團體及照顧者訓練課程。服務對象為輕度失智長者及其家庭照顧者，據點分布於宜蘭縣礁溪、冬山、羅東及三星。 資料來源：<a href="services.html">長福會服務說明</a>。</p></article>
+<article class="faq-item" id="faq-3"><h3>宜蘭溪北輔具資源中心有哪些服務項目？</h3><p>宜蘭縣溪北輔具資源中心提供輔具諮詢、評估、借用、維修及適配等服務。中心位於宜蘭縣宜蘭市聖後街141號，電話 03-9320920；服務時間為週一至週五 08:00-12:00、13:00-17:00，週三夜間 17:30-19:30 採預約制。辦理方式與最新公告請見中心官網。 資料來源：<a href="https://yilanatrc.com.tw/">宜蘭縣溪北輔具資源中心</a>。</p></article>
+</div></section>
+<!-- /search:faq -->
   <!-- CTA -->
   <section class="section cta-section" style="background: linear-gradient(135deg, #1e5d4d 0%, #2e7d6b 100%); text-align: center;">
     <div class="container reveal">
@@ -412,6 +553,7 @@
     </div>
   </section>
 
+  </main>
   <!-- Footer -->
   <footer class="footer">
     <div class="container">

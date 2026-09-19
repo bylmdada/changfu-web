@@ -62,8 +62,7 @@
         "@type": "Organization",
         "@id": "https://www.changfu.me/#organization",
         "name": "社團法人宜蘭縣長期照護及社會福祉推廣協會",
-        "foundingDate": "2020",
-        "description": "本會以確保長期照顧機構之服務品質、保障照顧工作人員權益為核心使命，致力於健全健康照護與長照服務資源整合。",
+          "description": "本會以確保長期照顧機構之服務品質、保障照顧工作人員權益為核心使命，致力於健全健康照護與長照服務資源整合。",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "八寶路25號",
@@ -82,28 +81,29 @@
 
   <!-- FAQ Schema for AI Search -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "長福會是什麼組織？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "社團法人宜蘭縣長期照護及社會福祉推廣協會（簡稱長福會）是成立於2020年的非營利社團法人，以確保長期照顧機構之服務品質、保障照顧工作人員權益為核心使命，致力於健全健康照護與長照服務資源整合，服務範圍涵蓋宜蘭縣全區。"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "長福會的服務範圍涵蓋宜蘭哪些地區？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "長福會服務範圍涵蓋宜蘭縣全區，重點服務鄉鎮包括冬山、蘇澳、礁溪、羅東、三星及宜蘭市，提供長者日間照顧服務、失智社區服務據點營運、輔具資源中心服務、照顧者訓練與支持、長照專業人員培訓等服務。"
-        }
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "長福會是什麼組織？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "社團法人宜蘭縣長期照護及社會福祉推廣協會（簡稱長福會）是非營利社團法人，以確保長期照顧機構之服務品質、保障照顧工作人員權益為核心使命，致力於健全健康照護與長照服務資源整合，服務範圍涵蓋宜蘭縣全區。"
       }
-    ]
-  }
+    },
+    {
+      "@type": "Question",
+      "name": "長福會的服務範圍涵蓋宜蘭哪些地區？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "長福會服務範圍涵蓋宜蘭縣全區，重點服務鄉鎮包括冬山、蘇澳、礁溪、羅東、三星及宜蘭市，提供長者日間照顧服務、失智社區服務據點營運、輔具資源中心服務、照顧者訓練與支持、長照專業人員培訓等服務。"
+      }
+    }
+  ],
+  "@id": "https://www.changfu.me/about.html#faq"
+}
   </script>
 </head>
 <body>
@@ -149,6 +149,7 @@
     </nav>
   </header>
 
+  <main id="main-content">
   <!-- Page Header -->
   <section class="hero hero-bg-image" style="padding-bottom: var(--spacing-2xl);">
     <div class="container">
@@ -268,6 +269,12 @@
     </div>
   </section>
 
+<!-- search:faq -->
+<section class="section" id="faq" aria-labelledby="faq-heading"><div class="container faq-list"><h2 id="faq-heading">常見問題與解答</h2>
+<article class="faq-item" id="faq-1"><h3>長福會是什麼組織？</h3><p>社團法人宜蘭縣長期照護及社會福祉推廣協會（簡稱長福會）是非營利社團法人，以確保長期照顧機構之服務品質、保障照顧工作人員權益為核心使命，致力於健全健康照護與長照服務資源整合，服務範圍涵蓋宜蘭縣全區。 資料來源：<a href="about.html">長福會協會簡介</a>。</p></article>
+<article class="faq-item" id="faq-2"><h3>長福會的服務範圍涵蓋宜蘭哪些地區？</h3><p>長福會服務範圍涵蓋宜蘭縣全區，重點服務鄉鎮包括冬山、蘇澳、礁溪、羅東、三星及宜蘭市，提供長者日間照顧服務、失智社區服務據點營運、輔具資源中心服務、照顧者訓練與支持、長照專業人員培訓等服務。 資料來源：<a href="services.html">長福會服務說明</a>。</p></article>
+</div></section>
+<!-- /search:faq -->
   <!-- CTA -->
   <section class="section cta-section" style="background: linear-gradient(135deg, #1e5d4d 0%, #2e7d6b 100%); text-align: center;">
     <div class="container reveal">
@@ -280,6 +287,7 @@
     </div>
   </section>
 
+  </main>
   <!-- Footer -->
   <footer class="footer">
     <div class="container">

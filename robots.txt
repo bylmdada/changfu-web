@@ -1,9 +1,11 @@
+# Public pages and assets are available to search crawlers.
+# OAI-SearchBot and PerplexityBot are covered by this wildcard rule.
+# ChatGPT-User / Perplexity-User fetches are user initiated.
 User-agent: *
 Allow: /
 
 Sitemap: https://www.changfu.me/sitemap.xml
 
-# LLM Context Files
-# See https://llmstxt.org/ for specification
-Allow: /llms.txt
-Allow: /llms-full.txt
+# Supplemental context (not an indexing or citation guarantee):
+# https://www.changfu.me/llms.txt
+# https://www.changfu.me/llms-full.txt

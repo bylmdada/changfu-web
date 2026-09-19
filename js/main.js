@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // 初始化靜態頁面功能
   initContactForm();
-  initHeroStats();
 
   // 若網址帶消息 hash（如 news.html#news-001），直接開啟該則詳情
   if (location.hash.length > 1) openNewsDetail(location.hash.slice(1));
@@ -58,72 +57,10 @@ async function loadSiteData() {
     renderAll();
   } catch (error) {
     console.error("Error loading site data:", error);
-    // Render with fallback data if JSON fetch fails (critical error)
-    siteData = getFallbackData();
-    window.siteData = siteData;
-    renderAll();
+    // Keep the published HTML when data is unavailable; never replace it with sample facts.
+    siteData = null;
+    window.siteData = null;
   }
-}
-
-// 備用資料（當 JSON 無法載入時使用）
-function getFallbackData() {
-  return {
-    organization: {
-      name: "社團法人宜蘭縣長期照護及社會福祉推廣協會",
-      shortName: "社團法人宜蘭縣長期照護及社會福祉推廣協會",
-      tagline: "專業照護、在地深耕、溫暖相伴",
-      stats: {
-        served: 5000,
-        years: 10,
-        locations: 8
-      }
-    },
-    serviceTypes: [
-      {
-        id: "elder-care",
-        name: "長者照顧服務",
-        shortDescription:
-          "提供日間照顧服務，讓長者在熟悉的社區環境中獲得生活照顧、健康促進及休閒社會參與活動。",
-        icon: "ph-house",
-        serviceItems: ["日間照顧", "健康促進", "社會參與"],
-      },
-      {
-        id: "dementia-center",
-        name: "失智社區服務據點",
-        shortDescription:
-          "提供在地化之失智照護與支持服務，協助長者維持生活功能。",
-        icon: "ph-brain",
-        serviceItems: ["認知促進", "共餐服務", "照顧者支持"],
-      },
-      {
-        id: "assistive-devices",
-        name: "輔具資源服務",
-        shortDescription: "提供單一窗口之輔具服務，協助民眾獲得適當輔具。",
-        icon: "ph-wheelchair",
-        serviceItems: ["輔具借用", "輔具評估", "居家無障礙評估"],
-      },
-    ],
-    serviceLocations: [
-      {
-        id: "babao",
-        name: "八寶社區長照機構",
-        locationType: "長照機構",
-        township: "冬山",
-        address: "宜蘭縣冬山鄉八寶路 25 號",
-        phone: "+886 3 958 1020",
-        serviceHours: "週一至週五 08:00-17:00",
-      },
-    ],
-    news: [
-      {
-        id: "news-001",
-        title: "歡迎蒞臨本會官方網站",
-        category: "公告",
-        summary: "社團法人宜蘭縣長期照護及社會福祉推廣協會官方網站正式上線。",
-        publishDate: "2026-02-10",
-      },
-    ],
-  };
 }
 
 // ============================================
@@ -285,74 +222,6 @@ function initBackToTop() {
 }
 
 // ============================================
-// Hero 統計數字動畫
-// ============================================
-function initHeroStats() {
-    const statsContainer = document.getElementById('heroStats');
-    if (!statsContainer) return; // 如果頁面沒有 Stats 容器則跳過
-
-    // 模擬數據 (如果 siteData 中沒有)
-    const statsData = siteData?.organization?.stats || {
-        served: 5000,
-        locations: 8
-    };
-
-    // 深耕年數依成立年自動計算，避免寫死過時
-    const foundingYear = parseInt(siteData?.organization?.establishedDate) || 2020;
-    const years = Math.max(1, new Date().getFullYear() - foundingYear);
-
-    // 如果已有內容則不重複渲染 (支援靜態 HTML)
-    if (statsContainer.innerHTML.trim() === '') {
-        statsContainer.innerHTML = `
-            <div class="stat-item reveal">
-                <span class="stat-number" data-target="${statsData.served}">0</span>
-                <span class="stat-label">服務人次</span>
-            </div>
-            <div class="stat-item reveal">
-                <span class="stat-number" data-target="${years}">0</span>
-                <span class="stat-label">深耕年數</span>
-            </div>
-            <div class="stat-item reveal">
-                <span class="stat-number" data-target="${statsData.locations}">0</span>
-                <span class="stat-label">服務據點</span>
-            </div>
-        `;
-    }
-
-    // 數字跳動動畫
-    const numbers = statsContainer.querySelectorAll('.stat-number');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = entry.target;
-                const endValue = parseInt(target.getAttribute('data-target'));
-                animateValue(target, 0, endValue, 2000);
-                observer.unobserve(target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    numbers.forEach(num => observer.observe(num));
-}
-
-function animateValue(obj, start, end, duration) {
-    let startTimestamp = null;
-    const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString() + (end > 100 ? '+' : '');
-        if (progress < 1) {
-            window.requestAnimationFrame(step);
-        }
-    };
-    window.requestAnimationFrame(step);
-}
-
-// ============================================
-// 渲染服務項目
-// ============================================
-// ============================================
 // 渲染服務項目
 // ============================================
 function renderServices() {
@@ -378,7 +247,7 @@ function renderServices() {
           )
           .join("")}
       </div>
-      <a href="services.html#${service.id}" class="card-link" aria-label="瞭解更多關於${service.name}">
+      <a href="services.html#${({'dementia-center': 'dementia', 'assistive-devices': 'assistive'})[service.id] || service.id}" class="card-link" aria-label="瞭解更多關於${service.name}">
         瞭解更多 →
       </a>
     </div>
@@ -699,7 +568,7 @@ function createLocationCard(location, type = '') {
         <div class="location-info" style="display: flex; flex-direction: column; gap: 0.5rem;">
           <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
             <span class="location-info-icon"><i class="ph ph-map-pin"></i></span>
-            <span>${location.township}</span>
+            <span>${location.address}</span>
           </div>
           <div class="location-info-item" style="display: flex; align-items: center; gap: 0.5rem;">
             <span class="location-info-icon"><i class="ph ph-phone"></i></span>
@@ -1027,7 +896,6 @@ window.SiteApp = {
   initContactForm,
   initA11yWidget,
   initBackToTop,
-  initHeroStats,
   initMobileNav,
   openNewsDetail,
   closeNewsDetail,

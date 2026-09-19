@@ -87,3 +87,7 @@ changfu web/
 
 ---
 © 2026 社團法人宜蘭縣長期照護及社會福祉推廣協會
+
+## AI 搜尋內容維護
+
+更新網站資料、服務卡片或 FAQ JSON-LD 後，執行 `node scripts/sync-search-content.cjs` 產生可直接爬取的 HTML 與 llms 文件，再執行 `python3 scripts/check-search-readiness.py` 驗證。詳見 [AEO／GEO 準備度報告](SEARCH_READINESS.md)。

@@ -1246,8 +1246,8 @@ body.high-contrast .btn {
 
 /* Scroll Reveal */
 .reveal {
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1;
+  transform: none;
   transition: all 0.6s ease;
 }
 
@@ -1457,3 +1457,9 @@ body.high-contrast .btn {
 body.modal-open {
   overflow: hidden;
 }
+
+/* Static answers remain readable without JavaScript. */
+.answer-summary, .faq-list { max-width: 900px; margin-inline: auto; }
+.faq-item { padding-block: var(--spacing-lg); border-bottom: 1px solid var(--color-gray-200); scroll-margin-top: 100px; }
+.faq-item h3 { font-size: var(--font-size-xl); margin-bottom: var(--spacing-sm); }
+.faq-item a, .answer-summary a { text-decoration: underline; text-underline-offset: 3px; }
