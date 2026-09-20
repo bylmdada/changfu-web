@@ -6,8 +6,17 @@
     "establishedDate": "2020",
     "registeredAddress": "宜蘭縣冬山鄉八寶路 25 號",
     "mainServiceAddress": "宜蘭縣冬山鄉八寶路 25 號",
-    "serviceRegions": ["宜蘭縣全區"],
-    "focusTownships": ["冬山", "蘇澳", "礁溪", "羅東", "三星", "宜蘭市"],
+    "serviceRegions": [
+      "宜蘭縣全區"
+    ],
+    "focusTownships": [
+      "冬山",
+      "蘇澳",
+      "礁溪",
+      "羅東",
+      "三星",
+      "宜蘭市"
+    ],
     "phone": "+886 3 958 1020",
     "fax": "",
     "email": "info@yilan-ltc.org.tw",
@@ -51,7 +60,10 @@
       "name": "失智社區服務據點",
       "shortDescription": "本會於礁溪、冬山、羅東及三星設置失智社區服務據點（樂智據點），提供在地化之失智照護與支持服務，協助長者維持生活功能。",
       "icon": "ph-brain",
-      "targetAudience": ["輕度失智長者", "失智長者之家庭照顧者"],
+      "targetAudience": [
+        "輕度失智長者",
+        "失智長者之家庭照顧者"
+      ],
       "serviceItems": [
         "認知功能促進活動",
         "預防及延緩失能課程",
@@ -69,7 +81,11 @@
       "name": "輔具資源服務",
       "shortDescription": "本會承接「宜蘭縣溪北輔具資源中心」，提供單一窗口之輔具服務，協助民眾獲得適當輔具，提升生活自立能力。",
       "icon": "ph-wheelchair",
-      "targetAudience": ["身心障礙者", "失能者", "一般有輔具需求之民眾"],
+      "targetAudience": [
+        "身心障礙者",
+        "失能者",
+        "一般有輔具需求之民眾"
+      ],
       "serviceItems": [
         "輔具諮詢服務",
         "輔具需求評估",
@@ -102,8 +118,14 @@
       "serviceHours": "週一至週五 08:00-17:00",
       "capacity": 30,
       "serviceContent": "提供日間照顧服務，包含生活照顧、健康促進、休閒活動、餐食供應、沐浴服務及交通接送等完善支援。",
-      "features": ["日間照顧", "餐食服務", "交通接送"],
-      "images": ["assets/images/locations/babao.png"],
+      "features": [
+        "日間照顧",
+        "餐食服務",
+        "交通接送"
+      ],
+      "images": [
+        "assets/images/locations/babao.png"
+      ],
       "status": "published",
       "displayOrder": 1
     },
@@ -122,8 +144,12 @@
       "serviceHours": "週一至週五 08:00-17:00",
       "capacity": null,
       "serviceContent": "提供日間照顧服務，包含生活照顧、健康促進、休閒活動與社會參與。",
-      "features": ["日間照顧"],
-      "images": ["assets/images/locations/suxi.png"],
+      "features": [
+        "日間照顧"
+      ],
+      "images": [
+        "assets/images/locations/suxi.png"
+      ],
       "status": "published",
       "displayOrder": 2
     },
@@ -142,8 +168,14 @@
       "serviceHours": "請洽詢",
       "capacity": null,
       "serviceContent": "提供認知功能促進、預防及延緩失能課程、共餐與社會參與活動，並辦理照顧者支持團體與照顧訓練。",
-      "features": ["認知促進", "共餐服務", "照顧者支持"],
-      "images": ["assets/images/locations/jiaoxi.png"],
+      "features": [
+        "認知促進",
+        "共餐服務",
+        "照顧者支持"
+      ],
+      "images": [
+        "assets/images/locations/jiaoxi.png"
+      ],
       "status": "published",
       "displayOrder": 1
     },
@@ -162,8 +194,14 @@
       "serviceHours": "請洽詢",
       "capacity": null,
       "serviceContent": "提供認知功能促進、預防及延緩失能課程、共餐與社會參與活動，並辦理照顧者支持團體與照顧訓練。",
-      "features": ["認知促進", "共餐服務", "照顧者支持"],
-      "images": ["assets/images/locations/dongshan.png"],
+      "features": [
+        "認知促進",
+        "共餐服務",
+        "照顧者支持"
+      ],
+      "images": [
+        "assets/images/locations/dongshan.png"
+      ],
       "status": "published",
       "displayOrder": 2
     },
@@ -182,8 +220,14 @@
       "serviceHours": "請洽詢",
       "capacity": null,
       "serviceContent": "提供認知功能促進、預防及延緩失能課程、共餐與社會參與活動，並辦理照顧者支持團體與照顧訓練。",
-      "features": ["認知促進", "共餐服務", "照顧者支持"],
-      "images": ["assets/images/locations/luodong.png"],
+      "features": [
+        "認知促進",
+        "共餐服務",
+        "照顧者支持"
+      ],
+      "images": [
+        "assets/images/locations/luodong.png"
+      ],
       "status": "published",
       "displayOrder": 3
     },
@@ -202,8 +246,14 @@
       "serviceHours": "請洽詢",
       "capacity": null,
       "serviceContent": "提供認知功能促進、預防及延緩失能課程、共餐與社會參與活動，並辦理照顧者支持團體與照顧訓練。",
-      "features": ["認知促進", "共餐服務", "照顧者支持"],
-      "images": ["assets/images/locations/sanxing.png"],
+      "features": [
+        "認知促進",
+        "共餐服務",
+        "照顧者支持"
+      ],
+      "images": [
+        "assets/images/locations/sanxing.png"
+      ],
       "status": "published",
       "displayOrder": 4
     },
@@ -222,8 +272,14 @@
       "serviceHours": "週一至週五 08:00-12:00、13:00-17:00；週三夜間 17:30-19:30（預約制）",
       "capacity": null,
       "serviceContent": "提供輔具諮詢、評估、回收、借用、適配、追蹤、維修、訓練及居家無障礙環境評估等服務。",
-      "features": ["輔具借用", "輔具評估", "居家無障礙評估"],
-      "images": ["assets/images/locations/atrc.png"],
+      "features": [
+        "輔具借用",
+        "輔具評估",
+        "居家無障礙評估"
+      ],
+      "images": [
+        "assets/images/locations/atrc.png"
+      ],
       "externalLink": "https://yilanatrc.com.tw",
       "status": "published",
       "displayOrder": 1
@@ -274,53 +330,6 @@
       "description": "針對現職照顧服務員設計之失智症照護進階課程，內容涵蓋失智症認識、溝通技巧、行為問題處理等專業知能。"
     }
   ],
-  "jobs": [
-    {
-      "id": "job-001",
-      "title": "照顧服務員",
-      "location": "冬山日間照顧中心",
-      "type": "全職",
-      "status": "active",
-      "statusText": "招募中",
-      "postedDate": "2026-01-10",
-      "salary": "月薪 32,000 ~ 38,000",
-      "requirements": [
-        "具照顧服務員結業證書",
-        "具備照顧服務員單一級技術士證照者優先",
-        "具相關工作經驗者優先",
-        "需配合輪班制度"
-      ],
-      "duties": [
-        "協助長者日常生活照顧（如進食、如廁、移位等）",
-        "執行健康促進與休閒活動",
-        "觀察並記錄長者健康狀況",
-        "協助維護環境整潔"
-      ],
-      "benefits": ["勞健保", "三節獎金", "年終獎金", "在職訓練"]
-    },
-    {
-      "id": "job-002",
-      "title": "社會工作員",
-      "location": "本會冬山辦公室",
-      "type": "全職",
-      "status": "active",
-      "statusText": "招募中",
-      "postedDate": "2026-01-05",
-      "salary": "月薪 35,000 ~ 42,000",
-      "requirements": [
-        "社會工作相關科系畢業",
-        "具社會工作師證照者優先",
-        "熟悉長照2.0服務體系",
-        "具個案管理經驗者優先"
-      ],
-      "duties": [
-        "長照服務個案評估與管理",
-        "服務計畫擬定與執行追蹤",
-        "資源連結與轉介服務",
-        "相關行政文書作業"
-      ],
-      "benefits": ["勞健保", "三節獎金", "年終獎金", "專業津貼"]
-    }
-  ],
+  "jobs": [],
   "resources": []
 }
